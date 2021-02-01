@@ -1678,8 +1678,6 @@
 				5A32CEC42029F79B0003B450 /* Assets.xcassets */,
 				5A32CEC92029F79B0003B450 /* Info.plist */,
 				5A32CECA2029F79B0003B450 /* main.m */,
-				5AD16ABA25C87E9400B9AC96 /* PNLiteDemoSettingsMainViewController.h */,
-				5AD16ABB25C87E9400B9AC96 /* PNLiteDemoSettingsMainViewController.m */,
 			);
 			path = PubnativeLiteDemo;
 			sourceTree = "<group>";
@@ -1725,6 +1723,8 @@
 				5A4FF06320AD92BD00B81B3D /* PNLiteDemoPNLiteBannerViewController.m */,
 				5A4FF06920ADB70D00B81B3D /* PNLiteDemoPNLiteInterstitialViewController.h */,
 				5A4FF06A20ADB70D00B81B3D /* PNLiteDemoPNLiteInterstitialViewController.m */,
+				5AD16ABA25C87E9400B9AC96 /* PNLiteDemoSettingsMainViewController.h */,
+				5AD16ABB25C87E9400B9AC96 /* PNLiteDemoSettingsMainViewController.m */,
 				5A59DBBA2052A2280002BCD4 /* PNLiteDemoPNLiteSettingsViewController.h */,
 				5A59DBBB2052A2280002BCD4 /* PNLiteDemoPNLiteSettingsViewController.m */,
 				5A5EEC432507D7AC008100AF /* PNLiteDemoPNLiteBannerSizeSelectionViewController.h */,
