@@ -33,6 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.demoAppVersionLabel.text = [NSString stringWithFormat:@"HyBid Demo App v: %@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+    self.demoAppVersionLabel.accessibilityValue = [NSString stringWithFormat:@"HyBid Demo App v: %@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+
 }
 
 @end

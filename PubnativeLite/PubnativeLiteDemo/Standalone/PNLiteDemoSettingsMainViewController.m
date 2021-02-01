@@ -1,5 +1,5 @@
 //
-//  Copyright © 2018 PubNative. All rights reserved.
+//  Copyright © 2020 PubNative. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,9 +20,19 @@
 //  THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
+#import "PNLiteDemoSettingsMainViewController.h"
 
-@interface BannerViewController : UIViewController
+@interface PNLiteDemoSettingsMainViewController ()
+
+@property (weak, nonatomic) IBOutlet UILabel *demoAppVersionLabel;
 
 @end
 
+@implementation PNLiteDemoSettingsMainViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.demoAppVersionLabel.text = [NSString stringWithFormat:@"v: %@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+}
+
+@end

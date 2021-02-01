@@ -1,5 +1,5 @@
 //
-//  Copyright © 2018 PubNative. All rights reserved.
+//  Copyright © 2020 PubNative. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -19,31 +19,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
-#import "AdSdkDemoSettings.h"
 
-NSString *const DemoAppToken = @"543027b8e954474cbcd9a98481622a3b";
+#import "PNLiteDemoBaseViewController.h"
 
-@implementation AdSdkDemoSettings
+@interface PNLiteDemoSettingsMainViewController : PNLiteDemoBaseViewController
 
-- (void)dealloc
-{
-    self.appToken = nil;
-}
-
-+ (AdSdkDemoSettings *)sharedInstance {
-    static AdSdkDemoSettings * _instance;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance = [[AdSdkDemoSettings alloc] init];
-    });
-    return _instance;
-}
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.appToken = DemoAppToken;
-    }
-    return self;
-}
 @end
