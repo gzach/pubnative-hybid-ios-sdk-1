@@ -76,7 +76,9 @@ NSString *const NumberEightAPIToken = @"T954C5VJTIAXAGMUVPDU0TZMGEV2";
             [audienceController scheduleNextAudienceRefreshTimerIn:refreshAudienceInterval];
             
             [[HyBidUserDataManager sharedInstance] createUserDataManagerWithCompletion:^(BOOL success) {
-                completion(success);
+                if (completion) {
+                    completion(success);
+                }
             }];
             
             [self startRecordingSessions];
