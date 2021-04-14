@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "Edge"
+  s.name         = "HyBid-Edge"
   s.version      = "2.4.6-edge"
   s.summary      = "This is the iOS SDK of HyBid. You can read more about it at https://pubnative.net."
   s.description = <<-DESC
@@ -44,7 +44,7 @@ Pod::Spec.new do |s|
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   s.ios.deployment_target = "9.0"
   s.source       = { :http => "https://github.com/pubnative/pubnative-hybid-ios-sdk/releases/download/2.4.5-edge/HyBid.xcframework.zip" }
-  s.vendored_framework = 'HyBid/HyBid.xcframework'
+  s.vendored_framework = 'HyBid.xcframework'
 
 end
 
