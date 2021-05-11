@@ -102,7 +102,6 @@
 
 - (void)rewardedAdWillDismissForAdUnitID:(NSString *)adUnitID {
     NSLog(@"rewardedAdWillDismiss");
-    self.showAdButton.hidden = YES;
 }
 
 - (void)rewardedAdDidDismissForAdUnitID:(NSString *)adUnitID {

@@ -21,7 +21,6 @@
 //
 
 #import "HyBidUserDataManager.h"
-#import "HyBidSettings.h"
 #import "HyBidGeoIPRequest.h"
 #import "PNLiteCountryUtils.h"
 #import "UIApplication+PNLiteTopViewController.h"
@@ -30,7 +29,14 @@
 #import "PNLiteUserConsentRequestModel.h"
 #import "PNLiteUserConsentResponseStatus.h"
 #import "PNLiteCheckConsentRequest.h"
-#import "HyBidLogger.h"
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 #define kCCPAPrivacyKey @"CCPA_Privacy"
 #define kGDPRConsentKey @"GDPR_Consent"
@@ -373,18 +379,18 @@ NSInteger const PNLiteConsentStateDenied = 0;
     if ([model.status isEqualToString:[PNLiteUserConsentResponseStatus ok]]) {
         if (model.consent != nil) {
             if (model.consent.consented) {
-                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Positive user consent has been notified"];
+                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Positive user consent has been notified"];
             } else {
-                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Negative user consent has been notified"];
+                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Negative user consent has been notified"];
             }
         }
-        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Check Consent Request finished."];
+        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Check Consent Request finished."];
         self.completionBlock(YES);
     }
 }
 
 - (void)checkConsentRequestFail:(NSError *)error {
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Check Consent Request failed with error: %@",error.localizedDescription]];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Check Consent Request failed with error: %@",error.localizedDescription]];
     self.completionBlock(NO);
 }
 
@@ -392,7 +398,7 @@ NSInteger const PNLiteConsentStateDenied = 0;
 
 - (void)userConsentRequestSuccess:(PNLiteUserConsentResponseModel *)model {
     if ([model.status isEqualToString:[PNLiteUserConsentResponseStatus ok]]) {
-        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"User Consent Request finished."];
+        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"User Consent Request finished."];
         if ([NSNumber numberWithInteger:self.consentState] != nil) {
             [self saveGDPRConsentState];
         }
@@ -400,18 +406,18 @@ NSInteger const PNLiteConsentStateDenied = 0;
 }
 
 - (void)userConsentRequestFail:(NSError *)error {
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"User Consent Request failed with error: %@",error.localizedDescription]];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"User Consent Request failed with error: %@",error.localizedDescription]];
 }
 
 #pragma mark HyBidGeoIPRequestDelegate
 
 - (void)requestDidStart:(HyBidGeoIPRequest *)request {
-    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Geo IP Request %@ started:",request]];
+    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Geo IP Request %@ started:",request]];
 }
 
 - (void)request:(HyBidGeoIPRequest *)request didLoadWithCountryCode:(NSString *)countryCode {
     if ([countryCode length] == 0) {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"No country code was obtained. The default value will be used, therefore no user data consent will be required."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"No country code was obtained. The default value will be used, therefore no user data consent will be required."];
         self.inGDPRZone = NO;
         self.completionBlock(NO);
     } else {
@@ -419,14 +425,14 @@ NSInteger const PNLiteConsentStateDenied = 0;
         if (self.inGDPRZone && ![self GDPRConsentAsked]) {
             [self checkConsentGiven];
         } else {
-            [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Geo IP Request %@ finished:",request]];
+            [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Geo IP Request %@ finished:",request]];
             self.completionBlock(YES);
         }
     }
 }
 
 - (void)request:(HyBidGeoIPRequest *)request didFailWithError:(NSError *)error {
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Geo IP Request %@ failed with error: %@",request, error.localizedDescription]];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Geo IP Request %@ failed with error: %@",request, error.localizedDescription]];
     self.completionBlock(NO);
 }
 

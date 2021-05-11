@@ -27,13 +27,19 @@
 #import "PNLiteVASTEventProcessor.h"
 #import "PNLiteProgressLabel.h"
 #import "UIApplication+PNLiteTopViewController.h"
-#import "HyBidLogger.h"
 #import "HyBidViewabilityNativeVideoAdSession.h"
 #import <OMSDK_Pubnativenet/OMIDAdSession.h>
 #import "HyBidAd.h"
 #import "HyBidSKAdNetworkViewController.h"
-#import "HyBidSettings.h"
 #import "HyBidURLDriller.h"
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 NSString * const PNLiteVASTPlayerStatusKeyPath         = @"status";
 NSString * const PNLiteVASTPlayerBundleName            = @"player.resources";
@@ -370,23 +376,25 @@ typedef enum : NSUInteger {
     Float64 currentDuration = [self duration];
     Float64 currentPlaybackTime = [self currentPlaybackTime];
     Float64 currentPlayedPercent = currentPlaybackTime / currentDuration;
+    Float64 currentSkipOffsetPercent = currentPlaybackTime / self.skipOffset;
 
     if ((self.skipOffsetFromServer != -1 || self.skipOffset > 0) && (self.skipOffset != 0 && self.skipOffsetFromServer != 0)) {
         NSInteger calculatedSkipOffset = self.skipOffset >= self.skipOffsetFromServer
                                                                         ? self.skipOffset
                                                                         : self.skipOffsetFromServer;
         
-        if (currentPlaybackTime >= calculatedSkipOffset - 0.5) { // -0.5 for more smooth transition between circular progress view and close button
+        if (currentPlaybackTime >= calculatedSkipOffset) {
             self.btnClose.hidden = NO;
             [self.viewSkip removeFromSuperview];
         } else {
             self.viewSkip.hidden = NO;
         }
         
-        if (self.skipOffset - currentPlaybackTime > 1) { // to prevent displaying 0 inside of the circle
-            self.progressLabel.text = [NSString stringWithFormat:@"%.f", self.skipOffset - currentPlaybackTime];
-        }
+        [self.progressLabel setProgress:currentSkipOffsetPercent];
+        self.progressLabel.text = [NSString stringWithFormat:@"%.f", self.skipOffset - currentPlaybackTime];
     }
+        
+    [self.viewProgress setProgress:currentPlayedPercent];
     
     switch (self.playback) {
         case PNLiteVASTPlaybackState_FirstQuartile:
@@ -417,20 +425,6 @@ typedef enum : NSUInteger {
     }
 }
 
-- (void)startBottomProgressBarAnimationWithDuration:(Float64)duration
-{
-    [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-        [self.viewProgress setProgress:1.0 animated:YES];
-    } completion:nil];
-}
-
-- (void)startCircularProgressBarAnimationWithDuration:(Float64)duration
-{
-    [UIView animateWithDuration:duration animations:^{
-        [self.progressLabel setProgress:1.0 timing:PNLitePropertyAnimationTimingLinear duration:duration delay:0];
-    }];
-}
-
 - (Float64)duration {
     AVPlayerItem *currentItem = self.player.currentItem;
     return CMTimeGetSeconds([currentItem duration]);
@@ -442,7 +436,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)trackError {
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Sending Error requests."];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Sending Error requests."];
     if(self.vastModel && [self.vastModel errors] != nil) {
         [self.eventProcessor sendVASTUrls:[self.vastModel errors]];
     }
@@ -485,14 +479,9 @@ typedef enum : NSUInteger {
 - (IBAction)btnOpenOfferPush:(id)sender {
     if (self.isRewarded && [self currentPlaybackTime] != 0) {
         if (self.player.rate != 0 && self.player.error == nil) { // isPlaying
-            [self.viewProgress setProgress:[self currentPlaybackTime] / [self duration]];
-            for (CALayer *layer in self.viewProgress.layer.sublayers) {
-                [layer removeAllAnimations];
-            }
             [self.player pause];
         } else {
             [self.player play];
-            [self startBottomProgressBarAnimationWithDuration:[self duration] - [self currentPlaybackTime]];
         }
         return;
     }
@@ -598,7 +587,7 @@ typedef enum : NSUInteger {
 
 - (void)invokeDidFailLoadingWithError:(NSError*)error {
     [self close];
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:error.localizedDescription];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:error.localizedDescription];
     if([self.delegate respondsToSelector:@selector(vastPlayer:didFailLoadingWithError:)]) {
         [self.delegate vastPlayer:self didFailLoadingWithError:error];
     }
@@ -606,9 +595,6 @@ typedef enum : NSUInteger {
 }
 
 - (void)invokeDidStartPlaying {
-    [self startBottomProgressBarAnimationWithDuration:[self duration]];
-    [self startCircularProgressBarAnimationWithDuration:self.skipOffset];
-    
     if([self.delegate respondsToSelector:@selector(vastPlayerDidStartPlaying:)]) {
         [self.delegate vastPlayerDidStartPlaying:self];
     }
@@ -698,7 +684,7 @@ typedef enum : NSUInteger {
         {
             if ((self.currentState & PNLiteVASTPlayerState_READY) && !self.shown) {
                 self.wantsToPlay = YES;
-                [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"You're trying to play when the view is not add to the screen, it will be played as soon as the view is add to the screen."];
+                [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"You're trying to play when the view is not add to the screen, it will be played as soon as the view is add to the screen."];
             }
             result = (self.currentState & (PNLiteVASTPlayerState_READY|PNLiteVASTPlayerState_PAUSE)) && self.shown;
         }
@@ -721,7 +707,7 @@ typedef enum : NSUInteger {
             case PNLiteVASTPlayerState_PAUSE:   [self setPauseState];   break;
         }
     } else {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Cannot go to state %lu, invalid previous state.", (unsigned long)state]];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Cannot go to state %lu, invalid previous state.", (unsigned long)state]];
     }
 }
 
@@ -754,7 +740,7 @@ typedef enum : NSUInteger {
         self.eventProcessor = [[PNLiteVASTEventProcessor alloc] initWithEvents:[self.videoAdCacheItem.vastModel trackingEvents] delegate:self];
         NSURL *mediaUrl = [PNLiteVASTMediaFilePicker pick:[self.videoAdCacheItem.vastModel mediaFiles]].url;
         if(!mediaUrl) {
-            [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Did not find a compatible media file."];
+            [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Did not find a compatible media file."];
             NSError *mediaNotFoundError = [NSError errorWithDomain:@"Not found compatible media with this device." code:0 userInfo:nil];
             [self invokeDidFailLoadingWithError:mediaNotFoundError];
         } else {
@@ -779,7 +765,7 @@ typedef enum : NSUInteger {
                 weakSelf.eventProcessor = [[PNLiteVASTEventProcessor alloc] initWithEvents:[model trackingEvents] delegate:self];
                 NSURL *mediaUrl = [PNLiteVASTMediaFilePicker pick:[model mediaFiles]].url;
                 if(!mediaUrl) {
-                    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Did not find a compatible media file."];
+                    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Did not find a compatible media file."];
                     NSError *mediaNotFoundError = [NSError errorWithDomain:@"Not found compatible media with this device." code:0 userInfo:nil];
                     [weakSelf invokeDidFailLoadingWithError:mediaNotFoundError];
                 } else {
@@ -799,7 +785,7 @@ typedef enum : NSUInteger {
             [self invokeDidFailLoadingWithError:unexpectedError];
         }
     } else {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"VAST is nil and required."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"VAST is nil and required."];
         [self setState:PNLiteVASTPlayerState_IDLE];
     }
 }
@@ -807,6 +793,7 @@ typedef enum : NSUInteger {
 - (void)setReadyState {
     self.loadingSpin.hidden = YES;
     self.btnMute.hidden = YES;
+    self.btnOpenOffer.hidden = YES;
     self.btnFullscreen.hidden = YES;
     self.viewSkip.hidden = YES;
     self.viewProgress.hidden = YES;
@@ -920,7 +907,7 @@ typedef enum : NSUInteger {
 #pragma mark PNLiteVASTEventProcessorDelegate
 
 - (void)eventProcessorDidTrackEvent:(PNLiteVASTEvent)event {
-    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Event tracked: %ld", (long)event]];
+    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Event tracked: %ld", (long)event]];
 }
 
 #pragma mark - HyBidContentInfoViewDelegate

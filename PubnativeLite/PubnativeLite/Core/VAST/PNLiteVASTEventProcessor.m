@@ -21,9 +21,16 @@
 //
 
 #import "PNLiteVASTEventProcessor.h"
-#import "HyBidLogger.h"
 #import "HyBidWebBrowserUserAgentInfo.h"
 #import "HyBidViewabilityNativeVideoAdSession.h"
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 @interface PNLiteVASTEventProcessor()
 
@@ -93,7 +100,7 @@
     } else {
         for (NSURL *eventUrl in self.events[eventString]) {
             [self sendTrackingRequest:[eventUrl absoluteString]];
-            [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Sent event '%@' to url: %@", eventString, [eventUrl absoluteString]]];
+            [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Sent event '%@' to url: %@", eventString, [eventUrl absoluteString]]];
         }
     }
 }
@@ -107,7 +114,7 @@
 - (void)sendVASTUrls:(NSArray *)urls {
     for (NSString *stringURL in urls) {
         [self sendTrackingRequest:stringURL];
-        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Sent http request to url: %@", stringURL]];
+        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Sent http request to url: %@", stringURL]];
     }
 }
 
@@ -115,7 +122,7 @@
     dispatch_queue_t sendTrackRequestQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(sendTrackRequestQueue, ^{
         
-        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Event processor sending request to url: %@", url]];
+        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Event processor sending request to url: %@", url]];
         
         NSURLSession * session = [NSURLSession sharedSession];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -130,12 +137,12 @@
                                 // Send the request only, no response or errors
                                 if(!error) {
                                     if ([data length] > 0) {
-                                        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Tracking url %@ response: %@", response.URL, [NSString stringWithUTF8String:[data bytes]]]];
+                                        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Tracking url %@ response: %@", response.URL, [NSString stringWithUTF8String:[data bytes]]]];
                                     } else {
-                                        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Tracking url: %@", response.URL]];
+                                        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Tracking url: %@", response.URL]];
                                     }
                                 } else {
-                                    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Tracking url %@ error: %@", response.URL, error]];
+                                    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Tracking url %@ error: %@", response.URL, error]];
                                 }
                             }] resume];
             });

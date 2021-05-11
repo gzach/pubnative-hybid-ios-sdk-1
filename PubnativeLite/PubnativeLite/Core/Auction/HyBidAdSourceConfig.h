@@ -20,8 +20,8 @@
 //  THE SOFTWARE.
 //
 
-#import <HyBid/HyBid.h>
- 
+#import "HyBidBaseModel.h"
+
 @interface HyBidAdSourceConfig : HyBidBaseModel
 
 @property (nonatomic, assign) double eCPM;

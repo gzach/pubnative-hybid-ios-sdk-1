@@ -22,7 +22,14 @@
 
 #import "HyBidURLDriller.h"
 #import "HyBidWebBrowserUserAgentInfo.h"
-#import "HyBidLogger.h"
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 NSTimeInterval const kHyBidURLDrillerTimeout = 5; // seconds
 
@@ -44,9 +51,9 @@ NSTimeInterval const kHyBidURLDrillerTimeout = 5; // seconds
 
 - (void)startDrillWithURLString:(NSString *)urlString delegate:(NSObject<HyBidURLDrillerDelegate>*)delegate {
     if(delegate == nil) {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"HyBidURLDrillerDelegate is nil and required, dropping this call."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"HyBidURLDrillerDelegate is nil and required, dropping this call."];
     } else if (urlString == nil || urlString.length == 0) {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"URL String is nil and required, dropping this call."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"URL String is nil and required, dropping this call."];
     } else {
         self.delegate = delegate;
         dispatch_async(dispatch_get_main_queue(), ^{

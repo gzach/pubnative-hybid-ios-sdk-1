@@ -24,8 +24,15 @@
 #import "HyBidRewardedAdRequest.h"
 #import "HyBidRewardedPresenter.h"
 #import "HyBidRewardedPresenterFactory.h"
-#import "HyBidLogger.h"
 #import "HyBidIntegrationType.h"
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 @interface HyBidRewardedAd() <HyBidRewardedPresenterDelegate, HyBidAdRequestDelegate>
 
@@ -99,7 +106,7 @@
     if (self.isReady) {
         [self.rewardedPresenter show];
     } else {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Can't display ad. Rewarded not ready."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Can't display ad. Rewarded not ready."];
     }
 }
 
@@ -107,7 +114,7 @@
     if (self.isReady) {
         [self.rewardedPresenter showFromViewController:viewController];
     } else {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Can't display ad. Rewarded not ready."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Can't display ad. Rewarded not ready."];
     }
 }
 
@@ -119,7 +126,7 @@
     HyBidRewardedPresenterFactory *rewardedPresenterFactory = [[HyBidRewardedPresenterFactory alloc] init];
     self.rewardedPresenter = [rewardedPresenterFactory createRewardedPresenterWithAd:ad withDelegate:self];
     if (!self.rewardedPresenter) {
-        [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Could not create valid rewarded presenter."];
+        [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Could not create valid rewarded presenter."];
         [self invokeDidFailWithError:[NSError errorWithDomain:@"The server has returned an unsupported ad asset." code:0 userInfo:nil]];
         return;
     } else {
@@ -134,7 +141,7 @@
 }
 
 - (void)invokeDidFailWithError:(NSError *)error {
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:error.localizedDescription];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:error.localizedDescription];
     if (self.delegate && [self.delegate respondsToSelector:@selector(rewardedDidFailWithError:)]) {
         [self.delegate rewardedDidFailWithError:error];
     }
@@ -176,11 +183,11 @@
 #pragma mark HyBidAdRequestDelegate
 
 - (void)requestDidStart:(HyBidAdRequest *)request {
-    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Ad Request %@ started:",request]];
+    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Ad Request %@ started:",request]];
 }
 
 - (void)request:(HyBidAdRequest *)request didLoadWithAd:(HyBidAd *)ad {
-    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Ad Request %@ loaded with ad: %@",request, ad]];
+    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Ad Request %@ loaded with ad: %@",request, ad]];
     if (!ad) {
         [self invokeDidFailWithError:[NSError errorWithDomain:@"Server returned nil ad." code:0 userInfo:nil]];
     } else {

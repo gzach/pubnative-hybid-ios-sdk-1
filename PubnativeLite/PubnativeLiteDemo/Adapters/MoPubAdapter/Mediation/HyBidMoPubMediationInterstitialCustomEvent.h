@@ -28,7 +28,7 @@
 #import "MPError.h"
 #endif
 
-#import <HyBid/HyBid.h>
+
 
 @interface HyBidMoPubMediationInterstitialCustomEvent : MPFullscreenAdAdapter
 

@@ -21,8 +21,7 @@
 //
 
 #import "PNLiteDemoVASTTestingViewController.h"
-#import "HyBidLogger.h"
-#import "HyBid.h"
+
 
 @interface PNLiteDemoVASTTestingViewController () <HyBidInterstitialAdDelegate>
 
@@ -82,7 +81,7 @@
 
 - (void)invokeDidFail:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:error.localizedDescription];
+        [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:error.localizedDescription];
     });
 }
 

@@ -23,10 +23,17 @@
 #import "PNLiteHttpRequest.h"
 #import "PNLiteReachability.h"
 #import "PNLiteCryptoUtils.h"
-#import "HyBidLogger.h"
 #import "HyBidWebBrowserUserAgentInfo.h"
 #import "HyBidRequestParameter.h"
 #import "HyBidSkAdNetworkRequestModel.h"
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 NSTimeInterval const PNLiteHttpRequestDefaultTimeout = 60;
 NSURLRequestCachePolicy const PNLiteHttpRequestDefaultCachePolicy = NSURLRequestUseProtocolCachePolicy;
@@ -84,7 +91,7 @@ NSInteger const MAX_RETRIES = 1;
     }
     
     if (!self.delegate) {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Delegate is nil, dropping the call."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Delegate is nil, dropping the call."];
     } else if(!self.urlString || self.urlString.length <= 0) {
         [self invokeFailWithMessage:@"URL is nil or empty." andAttemptRetry:NO];
     } else if(![self.method isEqualToString:@"GET"] && ![self.method isEqualToString:@"POST"] && ![self.method isEqualToString:@"DELETE"]) {
@@ -192,7 +199,7 @@ NSInteger const MAX_RETRIES = 1;
         if (self.header && self.header.count > 0) {
             for (NSString *key in self.header) {
                 id value = self.header[key];
-                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Value: %@ for key: %@", value, key]];
+                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Value: %@ for key: %@", value, key]];
                 [request setValue:value forHTTPHeaderField:key];
             }
         }
@@ -232,7 +239,7 @@ NSInteger const MAX_RETRIES = 1;
 
 - (void)invokeFailWithError:(NSError *)error andAttemptRetry:(BOOL)retry
 {
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"HTTP Request failed with error: %@", error.localizedDescription]];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"HTTP Request failed with error: %@", error.localizedDescription]];
     
     if (self.shouldRetry && self.retryCount < MAX_RETRIES && retry) {
         self.retryCount++;

@@ -20,14 +20,32 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+import Foundation
 
-@interface HyBidReportingEvent : NSObject
+public typealias ReportingKey = String
 
-@property (nonatomic) NSDictionary<NSString*, NSString*>* _Nonnull properties;
-@property (nonatomic) NSString* _Nullable eventType;
-
-- (nonnull instancetype)initWith:(NSString * _Nonnull)eventType adFormat:(NSString * _Nullable)adFormat properties:(NSDictionary<NSString *, NSString *> * _Nullable)properties;
--(NSString*_Nonnull) toJSON;
-
-@end
+@objc
+public class HyBidReportingEvent: NSObject {
+    
+    @objc public var properties: [ReportingKey: String] = [:]
+    @objc public var eventType: String
+    
+    @objc
+    public init(with eventType: String, adFormat: String, properties: [ReportingKey: String]? = nil) {
+        self.eventType = eventType
+        self.properties = properties ?? [:]
+        self.properties[Common.EVENT_TYPE] = eventType
+        self.properties[Common.AD_FORMAT] = adFormat
+        self.properties[Common.TIMESTAMP] = String(Date().timeIntervalSince1970 * 1000.0)
+    }
+    
+    @objc
+    public func toJSON() -> String {
+        let encoder = JSONEncoder()
+        guard let jsonData = try? encoder.encode(properties),
+              let jsonString = String(data: jsonData, encoding: .utf8) else {
+            return ""
+        }
+        return jsonString
+    }
+}

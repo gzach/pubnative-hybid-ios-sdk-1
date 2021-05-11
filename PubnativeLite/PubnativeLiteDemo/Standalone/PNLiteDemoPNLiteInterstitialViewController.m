@@ -29,7 +29,6 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *interstitialLoaderIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *inspectRequestButton;
 @property (weak, nonatomic) IBOutlet UILabel *creativeIdLabel;
-@property (weak, nonatomic) IBOutlet UIButton *showAdButton;
 @property (nonatomic, strong) HyBidInterstitialAd *interstitialAd;
 
 @end
@@ -55,20 +54,14 @@
     [self setCreativeIDLabelWithString:@"_"];
     [self clearLastInspectedRequest];
     self.inspectRequestButton.hidden = YES;
-    self.showAdButton.hidden = YES;
     [self.interstitialLoaderIndicator startAnimating];
     self.interstitialAd = [[HyBidInterstitialAd alloc] initWithZoneID:[[NSUserDefaults standardUserDefaults] stringForKey:kHyBidDemoZoneIDKey] andWithDelegate:self];
     [self.interstitialAd setSkipOffset: 5];
     [self.interstitialAd load];
 }
 
-- (IBAction)showInterstitialAdButtonTapped:(UIButton *)sender {
-    if (self.interstitialAd.isReady) {
-            [self.interstitialAd show];
-        }
-}
-
-- (void)setCreativeIDLabelWithString:(NSString *)string {
+- (void)setCreativeIDLabelWithString:(NSString *)string
+{
     self.creativeIdLabel.text = [NSString stringWithFormat:@"%@", string];
     self.creativeIdLabel.accessibilityValue = [NSString stringWithFormat:@"%@", string];
 }
@@ -79,8 +72,8 @@
     NSLog(@"Interstitial did load");
     [self setCreativeIDLabelWithString:self.interstitialAd.ad.creativeID];
     self.inspectRequestButton.hidden = NO;
-    self.showAdButton.hidden = NO;
     [self.interstitialLoaderIndicator stopAnimating];
+    [self.interstitialAd show];
 }
 
 - (void)interstitialDidFailWithError:(NSError *)error {
@@ -100,7 +93,6 @@
 
 - (void)interstitialDidDismiss {
     NSLog(@"Interstitial did dismiss");
-    self.showAdButton.hidden = YES;
 }
 
 @end

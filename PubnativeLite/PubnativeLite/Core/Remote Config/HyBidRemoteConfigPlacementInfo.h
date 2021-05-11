@@ -20,7 +20,6 @@
 //  THE SOFTWARE.
 //
 
-#import <HyBid/HyBid.h>
 #import "HyBidRemoteConfigPlacement.h"
 
 @interface HyBidRemoteConfigPlacementInfo : HyBidBaseModel

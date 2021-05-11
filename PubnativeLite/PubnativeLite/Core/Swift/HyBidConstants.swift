@@ -20,31 +20,14 @@
 //  THE SOFTWARE.
 //
 
-#import "HyBidReportingManager.h"
+import Foundation
 
-@implementation HyBidReportingManager
+@objc
+public class HyBidConstants: NSObject {
+    
+    @objc public static let HYBID_SDK_NAME = "HyBid"
+    @objc public static let HYBID_SDK_VERSION = "2.4.3"
+    @objc public static let HYBID_OMSDK_VERSION = "1.3.7"
+    @objc public static let HYBID_OMSDK_IDENTIFIER = "Pubnativenet"
 
-- (void)reportEventFor:(HyBidReportingEvent *)event {
-    [self.events addObject:event];
-    [self.delegate onEventWith:event];
 }
-
-- (void)reportEventsFor:(NSArray<HyBidReportingEvent *> *)events {
-    [self.events addObjectsFromArray:events];
-    for (HyBidReportingEvent *event in events) {
-        [self.delegate onEventWith:event];
-    }
-}
-
-+ (HyBidReportingManager *)sharedInstance {
-    static HyBidReportingManager *_reportingManager;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _reportingManager = [[HyBidReportingManager alloc] init];
-        _reportingManager.events = [[NSMutableArray alloc]init];
-    });
-    return _reportingManager;
-}
-
-
-@end

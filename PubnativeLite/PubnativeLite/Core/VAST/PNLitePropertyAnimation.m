@@ -21,7 +21,14 @@
 //
 
 #import "PNLitePropertyAnimation.h"
-#import "HyBidLogger.h"
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 #define kRefreshRate 1.0/30.0
 
@@ -192,7 +199,7 @@ static inline CGFloat funcQuadOut(CGFloat ft, CGFloat f0, CGFloat f1) {
         if ( [animation.fromValue isKindOfClass:[NSNumber class]] ) {
             value = [NSNumber numberWithDouble:[animation.fromValue doubleValue] + (position*([animation.toValue doubleValue] - [animation.fromValue doubleValue]))];
         } else {
-            [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Unsupported property type %@", NSStringFromClass([animation.fromValue class])]];
+            [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Unsupported property type %@", NSStringFromClass([animation.fromValue class])]];
         }
         
         // Apply new value

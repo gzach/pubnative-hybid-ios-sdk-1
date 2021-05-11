@@ -21,7 +21,7 @@
 //
 
 #import "PNLiteDemoPNLiteStickyBannerViewController.h"
-#import <HyBid/HyBid.h>
+
 #import "PNLiteDemoSettings.h"
 #import "HyBidSKAdNetworkViewController.h"
 
@@ -45,7 +45,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.bannerLoaderIndicator stopAnimating];
+    
     self.navigationItem.title = @"HyBid Sticky Banner";
     self.bannerAdView = [[HyBidAdView alloc] initWithSize:[PNLiteDemoSettings sharedInstance].adSize];
     self.bannerPosition = TOP;
@@ -77,7 +77,8 @@
     [self.bannerAdView loadWithZoneID:[[NSUserDefaults standardUserDefaults] stringForKey:kHyBidDemoZoneIDKey] withPosition:self.bannerPosition andWithDelegate:self];
 }
 
-- (void)setCreativeIDLabelWithString:(NSString *)string {
+- (void)setCreativeIDLabelWithString:(NSString *)string
+{
     self.creativeIdLabel.text = [NSString stringWithFormat:@"%@", string];
     self.creativeIdLabel.accessibilityValue = [NSString stringWithFormat:@"%@", string];
 }

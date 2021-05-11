@@ -1,5 +1,5 @@
 //
-//  Copyright © 2018 PubNative. All rights reserved.
+//  Copyright © 2020 PubNative. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,27 +20,32 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+import Foundation
 
-typedef enum {
-    HyBidLogLevelNone,
-    HyBidLogLevelError,
-    HyBidLogLevelWarning,
-    HyBidLogLevelInfo,
-    HyBidLogLevelDebug,
-} HyBidLogLevel;
+@objc
+public protocol HyBidReportingDelegate: AnyObject {
+    func onEvent(with event: HyBidReportingEvent)
+}
 
-// A simple logger enable you to see different levels of logging.
-// Use logLevel as a filter to see the messages for the specific level.
-//
-@interface HyBidLogger : NSObject
-
-// Method to filter logging with the level passed as the paramter
-+ (void)setLogLevel:(HyBidLogLevel)logLevel;
-
-+ (void)errorLogFromClass:(NSString *)className fromMethod:(NSString *)methodName withMessage:(NSString *)message;
-+ (void)warningLogFromClass:(NSString *)className fromMethod:(NSString *)methodName withMessage:(NSString *)message;
-+ (void)infoLogFromClass:(NSString *)className fromMethod:(NSString *)methodName withMessage:(NSString *)message;
-+ (void)debugLogFromClass:(NSString *)className fromMethod:(NSString *)methodName withMessage:(NSString *)message;
-
-@end
+@objc
+public class HyBidReportingManager: NSObject {
+    
+    @objc public static let sharedInstance = HyBidReportingManager()
+    
+    @objc public var events: [HyBidReportingEvent] = []
+    @objc weak public var delegate: HyBidReportingDelegate?
+    
+    @objc
+    public func reportEvent(for event: HyBidReportingEvent) {
+        events.append(event)
+        delegate?.onEvent(with: event)
+    }
+    
+    @objc
+    public func reportEvents(for events: [HyBidReportingEvent]) {
+        self.events.append(contentsOf: events)
+        for event in events {
+            delegate?.onEvent(with: event)
+        }
+    }
+}

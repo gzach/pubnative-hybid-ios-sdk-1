@@ -21,7 +21,6 @@
 //
 
 #import "HyBidViewabilityNativeVideoAdSession.h"
-#import "HyBid.h"
 
 @interface HyBidViewabilityNativeVideoAdSession()
 

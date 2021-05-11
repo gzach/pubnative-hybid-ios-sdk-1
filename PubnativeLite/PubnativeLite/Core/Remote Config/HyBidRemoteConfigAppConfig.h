@@ -20,7 +20,7 @@
  //  THE SOFTWARE.
  //
 
- #import <HyBid/HyBid.h>
+#import "HyBidBaseModel.h"
 
  typedef NS_ENUM(NSInteger, ApiType) {
      OPENRTB,

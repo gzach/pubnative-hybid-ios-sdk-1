@@ -21,7 +21,7 @@
 //
 
 #import "PNLiteDemoConsentManagementProviderViewController.h"
-#import <HyBid/HyBid.h>
+
 
 @interface PNLiteDemoConsentManagementProviderViewController ()
 
@@ -104,11 +104,11 @@
 }
 
 - (IBAction)privacyPolicyURLTouchUpInside:(UIButton *)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:sender.titleLabel.text] options:@{} completionHandler:nil];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:sender.titleLabel.text]];
 }
 
 - (IBAction)vendorListURLTouchUpInside:(UIButton *)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:sender.titleLabel.text] options:@{} completionHandler:nil];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:sender.titleLabel.text]];
 }
 
 @end

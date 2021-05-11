@@ -23,6 +23,8 @@
 #import "HyBidMoPubMediationInterstitialCustomEvent.h"
 #import "HyBidMoPubUtils.h"
 
+#import <HyBid/HyBid.h>
+
 @interface HyBidMoPubMediationInterstitialCustomEvent() <HyBidInterstitialAdDelegate>
 
 @property (nonatomic, strong) HyBidInterstitialAd *interstitialAd;

@@ -22,15 +22,21 @@
 
 #import "PNLiteAdFactory.h"
 #import "HyBidRequestParameter.h"
-#import "HyBidSettings.h"
 #import "PNLiteCryptoUtils.h"
 #import "PNLiteMeta.h"
 #import "PNLiteAsset.h"
-#import "HyBidConstants.h"
 #import "HyBidUserDataManager.h"
 #import "HyBidSkAdNetworkRequestModel.h"
 #import "HyBidRemoteConfigManager.h"
-#import "HyBidLogger.h"
+#import <CoreLocation/CoreLocation.h>
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 @implementation PNLiteAdFactory
 
@@ -58,8 +64,8 @@
         adRequestModel.requestParameters[HyBidRequestParameter.ip] = [HyBidSettings sharedInstance].ip;
     }
     
-    adRequestModel.requestParameters[HyBidRequestParameter.versionOfOMSDKIntegration] = HYBID_OMSDK_VERSION;
-    adRequestModel.requestParameters[HyBidRequestParameter.identifierOfOMSDKIntegration] = HYBID_OMSDK_IDENTIFIER;
+    adRequestModel.requestParameters[HyBidRequestParameter.versionOfOMSDKIntegration] = HyBidConstants.HYBID_OMSDK_VERSION;
+    adRequestModel.requestParameters[HyBidRequestParameter.identifierOfOMSDKIntegration] = HyBidConstants.HYBID_OMSDK_IDENTIFIER;
 //    adRequestModel.requestParameters[HyBidRequestParameter.supportedAPIFrameworks] = [supportedAPIFrameworks componentsJoinedByString:@","];
     adRequestModel.requestParameters[HyBidRequestParameter.identifierForVendor] = [HyBidSettings sharedInstance].identifierForVendor;
     
@@ -74,10 +80,10 @@
                     adRequestModel.requestParameters[HyBidRequestParameter.skAdNetworkAdNetworkIDs] = adIDs;
                     adRequestModel.requestParameters[HyBidRequestParameter.skAdNetworkVersion] = [skAdNetworkRequestModel getSkAdNetworkVersion];
                 } else {
-                    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"No SKAdNetworkIdentifier items were found in `info.plist` file. Please add the required items and try again."];
+                    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"No SKAdNetworkIdentifier items were found in `info.plist` file. Please add the required items and try again."];
                 }
             } else {
-                [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"HyBid AppID parameter cannot be empty. Please assign the actual AppStore app ID to this parameter and try again."];
+                [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"HyBid AppID parameter cannot be empty. Please assign the actual AppStore app ID to this parameter and try again."];
             }
         }
     }
@@ -131,8 +137,8 @@
 }
 
 - (void)setDisplayManager:(PNLiteAdRequestModel *)adRequestModel withIntegrationType:(IntegrationType)integrationType {
-    adRequestModel.requestParameters[HyBidRequestParameter.displayManager] = HYBID_SDK_NAME;
-    adRequestModel.requestParameters[HyBidRequestParameter.displayManagerVersion] = [NSString stringWithFormat:@"%@_%@_%@", @"sdkios", [HyBidIntegrationType getIntegrationTypeCodeFromIntegrationType:integrationType] ,HYBID_SDK_VERSION];
+    adRequestModel.requestParameters[HyBidRequestParameter.displayManager] = HyBidConstants.HYBID_SDK_NAME;
+    adRequestModel.requestParameters[HyBidRequestParameter.displayManagerVersion] = [NSString stringWithFormat:@"%@_%@_%@", @"sdkios", [HyBidIntegrationType getIntegrationTypeCodeFromIntegrationType:integrationType] ,HyBidConstants.HYBID_SDK_VERSION];
 }
 
 - (void)setIDFA:(PNLiteAdRequestModel *)adRequestModel {

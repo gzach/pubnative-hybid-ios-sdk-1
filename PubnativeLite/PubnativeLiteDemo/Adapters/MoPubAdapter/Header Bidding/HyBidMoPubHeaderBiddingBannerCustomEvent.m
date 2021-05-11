@@ -22,6 +22,7 @@
 
 #import "HyBidMoPubHeaderBiddingBannerCustomEvent.h"
 #import "HyBidMoPubUtils.h"
+#import <HyBid/HyBid.h>
 
 @interface HyBidMoPubHeaderBiddingBannerCustomEvent () <HyBidAdPresenterDelegate>
 

@@ -21,11 +21,17 @@
 //
 
 #import "HyBid.h"
-#import "HyBidSettings.h"
 #import "HyBidUserDataManager.h"
 #import "PNLiteLocationManager.h"
-#import "HyBidConstants.h"
 #import "HyBidRemoteConfigManager.h"
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 NSString *const HyBidBaseURL = @"https://api.pubnative.net";
 NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
@@ -50,7 +56,7 @@ NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
 
 + (void)initWithAppToken:(NSString *)appToken completion:(HyBidCompletionBlock)completion {
     if (!appToken || appToken.length == 0) {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"App Token is nil or empty and required."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"App Token is nil or empty and required."];
     } else {
         [HyBidSettings sharedInstance].appToken = appToken;
         [HyBidSettings sharedInstance].apiURL = HyBidBaseURL;
@@ -74,11 +80,11 @@ NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
 
 + (NSString *)sdkVersion
 {
-    return HYBID_SDK_VERSION;
+    return HyBidConstants.HYBID_SDK_VERSION;
 }
 
 + (void)setInterstitialSkipOffset:(NSInteger)seconds {
-    [HyBidSettings sharedInstance].skipOffset = seconds;
+    [HyBidSettings sharedInstance].skipOffset = [NSNumber numberWithInteger:seconds];
 }
 
 + (HyBidReportingManager *)reportingManager {

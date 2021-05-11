@@ -25,12 +25,19 @@
 #import "HyBidDataModel.h"
 #import "PNLiteTrackingManager.h"
 #import "PNLiteImpressionTracker.h"
-#import "HyBidLogger.h"
 #import "HyBidSkAdNetworkModel.h"
 #import "UIApplication+PNLiteTopViewController.h"
 #import <WebKit/WebKit.h>
 #import "HyBidSKAdNetworkViewController.h"
 #import "HyBidURLDriller.h"
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 NSString * const PNLiteNativeAdBeaconImpression = @"impression";
 NSString * const PNLiteNativeAdBeaconClick = @"click";
@@ -268,9 +275,9 @@ NSString * const PNLiteNativeAdBeaconClick = @"click";
 
 - (void)startTrackingImpressionWithView:(UIView *)view {
     if (!view) {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Ad view is nil, cannot start tracking."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Ad view is nil, cannot start tracking."];
     } else if (self.isImpressionConfirmed) {
-        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Impression is already confirmed, dropping impression tracking."];
+        [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Impression is already confirmed, dropping impression tracking."];
     } else {
         if(!self.impressionTracker) {
             self.impressionTracker = [[PNLiteImpressionTracker alloc] init];
@@ -282,9 +289,9 @@ NSString * const PNLiteNativeAdBeaconClick = @"click";
 
 - (void)startTrackingClicksWithView:(UIView*)view withClickableViews:(NSArray*)clickableViews {
     if (!view && !clickableViews) {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Click view is nil, clicks won't be tracked."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Click view is nil, clicks won't be tracked."];
     } else if (!self.clickUrl || self.clickUrl.length == 0) {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Click URL is empty, clicks won't be tracked."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Click URL is empty, clicks won't be tracked."];
     } else {
         self.clickableViews = [clickableViews mutableCopy];
         if(!self.clickableViews) {
@@ -345,7 +352,7 @@ NSString * const PNLiteNativeAdBeaconClick = @"click";
 
 - (void)confirmBeaconsWithType:(NSString *)type {
     if (!self.ad || !self.ad.beacons || self.ad.beacons.count == 0) {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Ad beacons not found for type: %@", type]];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Ad beacons not found for type: %@", type]];
     } else {
         for (HyBidDataModel *beacon in self.ad.beacons) {
             if ([beacon.type isEqualToString:type]) {
@@ -451,7 +458,7 @@ NSString * const PNLiteNativeAdBeaconClick = @"click";
         self.fetchDelegate = delegate;
         [self fetchAssets:assets];
     } else {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Fetch asssets with delegate nil, dropping this call."];
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Fetch asssets with delegate nil, dropping this call."];
     }
 }
 
@@ -542,7 +549,7 @@ NSString * const PNLiteNativeAdBeaconClick = @"click";
     __block HyBidNativeAd *strongSelf = self;
     __block NSObject<HyBidNativeAdFetchDelegate> *delegate = self.fetchDelegate;
     self.fetchDelegate = nil;
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:error.localizedDescription];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:error.localizedDescription];
     if (delegate) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (delegate && [delegate respondsToSelector:@selector(nativeAd:didFailFetchingWithError:)]) {

@@ -22,9 +22,16 @@
 
 #import "HyBidAdTracker.h"
 #import "HyBidDataModel.h"
-#import "HyBidLogger.h"
 #import "HyBidURLDriller.h"
 #import <WebKit/WebKit.h>
+
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
 
 NSString *const PNLiteAdTrackerClick = @"click";
 NSString *const PNLiteAdTrackerImpression = @"impression";
@@ -97,11 +104,11 @@ NSString *const PNLiteAdTrackerImpression = @"impression";
                     self.trackTypeForURL = trackType;
                     [[[HyBidURLDriller alloc] init] startDrillWithURLString:dataModel.url delegate:self];
                 } else {
-                    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Tracking %@ with URL: %@",trackType, dataModel.url]];
+                    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Tracking %@ with URL: %@",trackType, dataModel.url]];
                     [self.adTrackerRequest trackAdWithDelegate:self withURL:dataModel.url];
                 }
             } else if (dataModel.js != nil) {
-                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Tracking %@ with JS Beacon: %@",trackType, dataModel.js]];
+                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Tracking %@ with JS Beacon: %@",trackType, dataModel.js]];
                 [self.wkWebView evaluateJavaScript:dataModel.js completionHandler:^(id _Nullable success, NSError * _Nullable error) {}];
             }
         }
@@ -111,15 +118,15 @@ NSString *const PNLiteAdTrackerImpression = @"impression";
 #pragma mark HyBidAdTrackerRequestDelegate
 
 - (void)requestDidStart:(HyBidAdTrackerRequest *)request {
-    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Ad Tracker Request %@ started:",request]];
+    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Ad Tracker Request %@ started:",request]];
 }
 
 - (void)requestDidFinish:(HyBidAdTrackerRequest *)request {
-    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Ad Tracker Request %@ finished:",request]];
+    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Ad Tracker Request %@ finished:",request]];
 }
 
 - (void)request:(HyBidAdTrackerRequest *)request didFailWithError:(NSError *)error {
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Ad Tracker Request %@ failed with error: %@",request,error.localizedDescription]];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Ad Tracker Request %@ failed with error: %@",request,error.localizedDescription]];
 }
 
 #pragma mark HyBidURLDrillerDelegate
@@ -133,7 +140,7 @@ NSString *const PNLiteAdTrackerImpression = @"impression";
 }
 
 - (void)didFinishWithURL:(NSURL *)url {
-    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Tracking %@ with URL: %@",self.trackTypeForURL, [url absoluteString]]];
+    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Tracking %@ with URL: %@",self.trackTypeForURL, [url absoluteString]]];
     [self.adTrackerRequest trackAdWithDelegate:self withURL:[url absoluteString]];
 }
 

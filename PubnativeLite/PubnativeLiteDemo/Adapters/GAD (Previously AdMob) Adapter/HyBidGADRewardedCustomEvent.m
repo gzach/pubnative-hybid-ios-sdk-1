@@ -22,6 +22,7 @@
 
 #import "HyBidGADRewardedCustomEvent.h"
 #import "HyBidGADUtils.h"
+#import <HyBid/HyBid.h>
 
 typedef id<GADMediationRewardedAdEventDelegate> _Nullable(^HyBidGADRewardedCustomEventCompletionBlock)(_Nullable id<GADMediationRewardedAd> ad,
                                                                                                                   NSError *_Nullable error);
@@ -39,7 +40,7 @@ typedef id<GADMediationRewardedAdEventDelegate> _Nullable(^HyBidGADRewardedCusto
 }
 
 - (void)invokeFailWithMessage:(NSString *)message {
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:message];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:message];
     self.completionBlock(nil, [NSError errorWithDomain:message code:0 userInfo:nil]);
     [self.delegate didFailToPresentWithError:[NSError errorWithDomain:message code:0 userInfo:nil]];
 }
@@ -107,12 +108,13 @@ typedef id<GADMediationRewardedAdEventDelegate> _Nullable(^HyBidGADRewardedCusto
 
 #pragma mark - GADMediationAdapter
 
-// v: 2.4.7
+// v: 2.4.8-beta1
 + (GADVersionNumber)adSDKVersion {
     GADVersionNumber version = {0};
     version.majorVersion = 2;
     version.minorVersion = 4;
-    version.patchVersion = 7;
+    version.patchVersion = 8;
+    
     return version;
 }
 
@@ -120,7 +122,7 @@ typedef id<GADMediationRewardedAdEventDelegate> _Nullable(^HyBidGADRewardedCusto
     GADVersionNumber version = {0};
     version.majorVersion = 2;
     version.minorVersion = 4;
-    version.patchVersion = 7;
+    version.patchVersion = 8;
     return version;
 }
 

@@ -23,6 +23,14 @@
 #import "HyBidRemoteConfigManager.h"
 #import "HyBidRemoteConfigRequest.h"
 
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <UIKit/UIKit.h>
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import <UIKit/UIKit.h>
+    #import "HyBid-Swift.h"
+#endif
+
 #define kRemoteConfigTimestampKey @"remoteConfigTimestamp"
 
 @interface HyBidRemoteConfigManager() <HyBidRemoteConfigRequestDelegate>
@@ -54,9 +62,9 @@
     if ([self isConfigOutdated]) {
         [self fetchRemoteConfigWithCompletion:^(BOOL success, HyBidRemoteConfigModel *remoteConfigModel) {
             if (success) {
-                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Config refreshed."];
+                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Config refreshed."];
             } else {
-                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Config refresh failed."];
+                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Config refresh failed."];
             }
         }];
     }
@@ -94,7 +102,7 @@
 #pragma mark HyBidRemoteConfigRequestDelegate
 
 - (void)remoteConfigRequestSuccess:(HyBidRemoteConfigModel *)model {
-    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Remote Config Request finished."];
+    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"Remote Config Request finished."];
     if (model) {
         [self storeConfigTimestamp];
         [self storeAPIVersionFrom:model];
@@ -108,7 +116,7 @@
 }
 
 - (void)remoteConfigRequestFail:(NSError *)error {
-    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Remote Config Request failed with error: %@",error.localizedDescription]];
+    [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat:@"Remote Config Request failed with error: %@",error.localizedDescription]];
     self.completionBlock(NO, nil);
 }
 

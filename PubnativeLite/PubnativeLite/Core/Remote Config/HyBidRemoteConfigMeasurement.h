@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //
 
-#import <HyBid/HyBid.h>
+#import "HyBidBaseModel.h"
 
 @interface HyBidRemoteConfigMeasurement : HyBidBaseModel
 

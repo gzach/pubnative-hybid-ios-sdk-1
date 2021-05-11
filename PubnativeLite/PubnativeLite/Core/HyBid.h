@@ -88,7 +88,6 @@ FOUNDATION_EXPORT const unsigned char HyBidVersionString[];
 
 #import <HyBid/HyBidBannerPresenterFactory.h>
 #import <HyBid/HyBidRequestParameter.h>
-#import <HyBid/HyBidTargetingModel.h>
 #import <HyBid/HyBidAdRequest.h>
 #import <HyBid/HyBidMRAIDServiceProvider.h>
 #import <HyBid/HyBidMRAIDView.h>
@@ -105,19 +104,23 @@ FOUNDATION_EXPORT const unsigned char HyBidVersionString[];
 #import <HyBid/HyBidDataModel.h>
 #import <HyBid/HyBidAd.h>
 #import <HyBid/HyBidAdView.h>
-#import <HyBid/HyBidSettings.h>
 #import <HyBid/HyBidStarRatingView.h>
 #import <HyBid/HyBidViewabilityManager.h>
-#import <HyBid/HyBidLogger.h>
 #import <HyBid/HyBidIntegrationType.h>
 #import <HyBid/HyBidAdSize.h>
 #import <HyBid/HyBidSignalDataProcessor.h>
 #import <HyBid/HyBidOpenRTBDataModel.h>
-#import <HyBid/HyBidReportingManager.h>
-#import <HyBid/HyBidReporting.h>
-#import <HyBid/HyBidReportingEvent.h>
+
+@class HyBidTargetingModel;
+@class HyBidReportingManager;
 
 typedef void (^HyBidCompletionBlock)(BOOL);
+
+typedef enum {
+    HyBidAudioStatusMuted,
+    HyBidAudioStatusON,
+    HyBidAudioStatusDefault
+} HyBidAudioStatus;
 
 @interface HyBid : NSObject
 

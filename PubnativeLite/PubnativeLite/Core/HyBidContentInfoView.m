@@ -127,6 +127,7 @@ NSTimeInterval const PNLiteContentViewClosingTime = 3.0f;
 }
 
 - (void)layoutSubviews {
+    
     if(!self.iconImage) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSData *iconData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.icon]];
@@ -140,15 +141,11 @@ NSTimeInterval const PNLiteContentViewClosingTime = 3.0f;
 
 - (void)configureView {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (self) {
-            if (self.iconView && self.textView) {
-                self.textView.text = self.text;
-                [self.textView sizeToFit];
-                [self.iconView setImage:self.iconImage];
-                self.openSize = self.iconView.frame.size.width + self.textView.frame.size.width;
-                self.hidden = NO;
-            }
-        }
+        self.textView.text = self.text;
+        [self.textView sizeToFit];
+        [self.iconView setImage:self.iconImage];
+        self.openSize = self.iconView.frame.size.width + self.textView.frame.size.width;
+        self.hidden = NO;
     });
 }
 

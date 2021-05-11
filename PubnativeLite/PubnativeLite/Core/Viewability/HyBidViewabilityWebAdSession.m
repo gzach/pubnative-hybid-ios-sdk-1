@@ -21,7 +21,6 @@
 //
 
 #import "HyBidViewabilityWebAdSession.h"
-#import "HyBid.h"
 
 @interface HyBidViewabilityWebAdSession()
 

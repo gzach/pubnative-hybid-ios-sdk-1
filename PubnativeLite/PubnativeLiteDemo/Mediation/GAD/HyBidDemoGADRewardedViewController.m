@@ -104,7 +104,6 @@
 
 - (void)adDidDismissFullScreenContent:(id)ad {
     NSLog(@"Rewarded ad dismissed.");
-    self.showAdButton.hidden = YES;
 }
 
 @end
