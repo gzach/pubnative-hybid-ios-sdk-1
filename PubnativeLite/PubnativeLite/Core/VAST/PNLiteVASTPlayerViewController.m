@@ -376,26 +376,36 @@ typedef enum : NSUInteger {
     Float64 currentDuration = [self duration];
     Float64 currentPlaybackTime = [self currentPlaybackTime];
     Float64 currentPlayedPercent = currentPlaybackTime / currentDuration;
-    Float64 currentSkipOffsetPercent = currentPlaybackTime / self.skipOffset;
+    Float64 currentSkippablePlayedPercent = 0;
 
+    if (self.skipOffset > 0) {
+        currentSkippablePlayedPercent = currentPlaybackTime / self.skipOffset;
+    }
+    
     if ((self.skipOffsetFromServer != -1 || self.skipOffset > 0) && (self.skipOffset != 0 && self.skipOffsetFromServer != 0)) {
         NSInteger calculatedSkipOffset = self.skipOffset >= self.skipOffsetFromServer
                                                                         ? self.skipOffset
                                                                         : self.skipOffsetFromServer;
         
-        if (currentPlaybackTime >= calculatedSkipOffset) {
+        if (currentPlaybackTime >= calculatedSkipOffset - 0.5) { // -0.5 for more smooth transition between circular progress view and close button
             self.btnClose.hidden = NO;
             [self.viewSkip removeFromSuperview];
         } else {
             self.viewSkip.hidden = NO;
         }
         
-        [self.progressLabel setProgress:currentSkipOffsetPercent];
-        self.progressLabel.text = [NSString stringWithFormat:@"%.f", self.skipOffset - currentPlaybackTime];
-    }
+        if (self.skipOffset - currentPlaybackTime > 1) { // to prevent displaying 0 inside of the circle
+            self.progressLabel.text = [NSString stringWithFormat:@"%.f", self.skipOffset - currentPlaybackTime];
+        }
         
-    [self.viewProgress setProgress:currentPlayedPercent];
+        if (currentSkippablePlayedPercent > 0) {
+            [self startCircularProgressBarAnimationWithProgress:currentSkippablePlayedPercent];
+        }
+
+    }
     
+    [self startBottomProgressBarAnimationWithProgress:currentPlayedPercent];
+
     switch (self.playback) {
         case PNLiteVASTPlaybackState_FirstQuartile:
         {
@@ -423,6 +433,18 @@ typedef enum : NSUInteger {
             break;
         default: break;
     }
+}
+
+- (void)startBottomProgressBarAnimationWithProgress:(Float64)progress
+{
+    [UIView animateWithDuration:progress delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        [self.viewProgress setProgress:progress animated:YES];
+    } completion:nil];
+}
+
+- (void)startCircularProgressBarAnimationWithProgress:(Float64)progress
+{
+    [self.progressLabel setProgress:progress];
 }
 
 - (Float64)duration {
@@ -479,6 +501,10 @@ typedef enum : NSUInteger {
 - (IBAction)btnOpenOfferPush:(id)sender {
     if (self.isRewarded && [self currentPlaybackTime] != 0) {
         if (self.player.rate != 0 && self.player.error == nil) { // isPlaying
+            [self.viewProgress setProgress:[self currentPlaybackTime] / [self duration]];
+            for (CALayer *layer in self.viewProgress.layer.sublayers) {
+                [layer removeAllAnimations];
+            }
             [self.player pause];
         } else {
             [self.player play];
@@ -793,7 +819,6 @@ typedef enum : NSUInteger {
 - (void)setReadyState {
     self.loadingSpin.hidden = YES;
     self.btnMute.hidden = YES;
-    self.btnOpenOffer.hidden = YES;
     self.btnFullscreen.hidden = YES;
     self.viewSkip.hidden = YES;
     self.viewProgress.hidden = YES;

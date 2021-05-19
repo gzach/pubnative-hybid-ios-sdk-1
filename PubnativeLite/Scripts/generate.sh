@@ -25,4 +25,4 @@ xcodebuild -create-xcframework -framework $IPHONEOS_FRAMEWORK -framework $IPHONE
 zip -r $XCFRAMEWORK_ZIP_PATH $XCFRAMEWORK
 
 # Generate Static framework + bundle resrource. a zip file will be generated at /tmp/circle-ci-artifact
-xcodebuild -workspace HyBid.xcworkspace -scheme HybidFramework -sdk iphoneos -destination generic/platform=iOS -configuration Release clean build | xcpretty -c
+#xcodebuild -workspace HyBid.xcworkspace -scheme HybidFramework -sdk iphoneos -destination generic/platform=iOS -configuration Release clean build | xcpretty -c

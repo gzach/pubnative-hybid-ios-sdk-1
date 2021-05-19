@@ -410,12 +410,14 @@ typedef enum {
 - (void)showAsInterstitial {
     [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat: @"%@", NSStringFromSelector(_cmd)]];
     [self expand:nil supportVerve:NO];
+    [self setIsViewable:YES];
 }
 
 - (void)showAsInterstitialFromViewController:(UIViewController *)viewController {
     [self setRootViewController:viewController];
     [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:[NSString stringWithFormat: @"%@", NSStringFromSelector(_cmd)]];
     [self expand:nil supportVerve:NO];
+    [self setIsViewable:YES];
 }
 
 - (void)hide {
@@ -1119,7 +1121,10 @@ typedef enum {
             [self fireReadyEvent];
             
             if ([self.delegate respondsToSelector:@selector(mraidViewAdReady:)]) {
-                self.isViewable = YES;
+                // Interstitials isViewable flag will be fired only when they are showing.
+                if (!isInterstitial) {
+                    self.isViewable = YES;
+                }
                 [self.delegate mraidViewAdReady:self];
             }
             
