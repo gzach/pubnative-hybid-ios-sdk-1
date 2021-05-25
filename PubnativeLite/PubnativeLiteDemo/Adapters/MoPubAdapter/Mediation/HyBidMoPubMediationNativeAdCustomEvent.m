@@ -93,10 +93,7 @@
             strongSelf = nil;
         }];
     } else {
-        HyBidMoPubMediationNativeAdAdapter *adapter = [[HyBidMoPubMediationNativeAdAdapter alloc] initWithNativeAd:nativeAd];
-        MPNativeAd* result = [[MPNativeAd alloc] initWithAdAdapter:adapter];
-        [self.delegate nativeCustomEvent:self didLoadAd:result];
-        MPLogEvent([MPLogEvent adLoadSuccessForAdapter:NSStringFromClass([self class])]);
+        [self invokeFailWithMessage:@"Misconfiguration of the Native Ad."];
     }
 }
 

@@ -57,6 +57,9 @@ NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
 + (void)initWithAppToken:(NSString *)appToken completion:(HyBidCompletionBlock)completion {
     if (!appToken || appToken.length == 0) {
         [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"App Token is nil or empty and required."];
+        if (completion) {
+            completion(false);
+        }
     } else {
         [HyBidSettings sharedInstance].appToken = appToken;
         [HyBidSettings sharedInstance].apiURL = HyBidBaseURL;
@@ -85,6 +88,10 @@ NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
 
 + (void)setInterstitialSkipOffset:(NSInteger)seconds {
     [HyBidSettings sharedInstance].skipOffset = [NSNumber numberWithInteger:seconds];
+}
+
++ (void)setInterstitialCloseOnFinish:(BOOL)closeOnFinish {
+    [HyBidSettings sharedInstance].closeOnFinish = closeOnFinish;
 }
 
 + (HyBidReportingManager *)reportingManager {

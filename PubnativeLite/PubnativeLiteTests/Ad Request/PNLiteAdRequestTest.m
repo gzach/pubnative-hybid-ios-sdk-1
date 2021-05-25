@@ -35,7 +35,6 @@
 
 @interface HyBidAdRequest ()
 
-@property (nonatomic, weak) NSObject <HyBidAdRequestDelegate> *delegate;
 - (void)invokeDidStart;
 - (void)invokeDidLoad:(HyBidAd *)ad;
 - (void)invokeDidFail:(NSError *)error;

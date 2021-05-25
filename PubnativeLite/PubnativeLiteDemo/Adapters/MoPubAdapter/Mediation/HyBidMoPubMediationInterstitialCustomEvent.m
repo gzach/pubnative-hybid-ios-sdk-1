@@ -24,6 +24,7 @@
 #import "HyBidMoPubUtils.h"
 
 #import <HyBid/HyBid.h>
+#import <HyBid/HyBid-Swift.h>
 
 @interface HyBidMoPubMediationInterstitialCustomEvent() <HyBidInterstitialAdDelegate>
 

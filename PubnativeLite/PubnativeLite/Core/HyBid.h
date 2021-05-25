@@ -82,8 +82,14 @@ FOUNDATION_EXPORT const unsigned char HyBidVersionString[];
 #endif
 
 //Rewarded video Module headers
-#if __has_include("HyBidRewardedAd.h")
-    #import <HyBid/HyBidRewardedAd.h>
+#if __has_include("HyBidRewardedAdRequest.h")
+    #import <HyBid/HyBidRewardedAdRequest.h>
+#endif
+#if __has_include("HyBidRewardedPresenter.h")
+    #import <HyBid/HyBidRewardedPresenter.h>
+#endif
+#if __has_include("HyBidRewardedPresenterFactory.h")
+    #import <HyBid/HyBidRewardedPresenterFactory.h>
 #endif
 
 #import <HyBid/HyBidBannerPresenterFactory.h>
@@ -135,5 +141,6 @@ typedef enum {
 + (void)setInterstitialSkipOffset:(NSInteger)seconds;
 + (HyBidReportingManager *)reportingManager;
 + (void)setVideoAudioStatus:(HyBidAudioStatus)audioStatus;
++ (void)setInterstitialCloseOnFinish:(BOOL)closeOnFinish;
 
 @end

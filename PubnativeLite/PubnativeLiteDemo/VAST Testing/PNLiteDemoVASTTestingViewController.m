@@ -21,7 +21,7 @@
 //
 
 #import "PNLiteDemoVASTTestingViewController.h"
-
+#import <HyBid/HyBid-Swift.h>
 
 @interface PNLiteDemoVASTTestingViewController () <HyBidInterstitialAdDelegate>
 

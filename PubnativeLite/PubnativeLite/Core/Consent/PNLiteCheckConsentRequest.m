@@ -34,7 +34,6 @@
 
 @interface PNLiteCheckConsentRequest() <PNLiteHttpRequestDelegate>
 
-@property (nonatomic, weak) NSObject <PNLiteCheckConsentRequestDelegate> *delegate;
 
 @end
 

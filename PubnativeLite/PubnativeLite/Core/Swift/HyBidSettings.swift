@@ -40,6 +40,7 @@ public class HyBidSettings: NSObject {
     @objc public var appID: String?
     @objc public var skipOffset: NSNumber?
     @objc public var audioStatus: HyBidAudioStatus = HyBidAudioStatusMuted
+    @objc public var closeOnFinish: Bool = false
 
     // COMMON PARAMETERS
     @objc public var advertisingId: String? {

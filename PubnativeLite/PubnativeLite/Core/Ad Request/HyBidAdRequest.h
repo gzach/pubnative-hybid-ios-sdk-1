@@ -47,6 +47,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL isRewarded;
 @property (nonatomic, readonly) NSArray<NSString *> *supportedAPIFrameworks;
 @property (nonatomic) AdType openRTBAdType;
+@property (nonatomic) NSObject <HyBidAdRequestDelegate> *delegate;
 
 - (void)setIntegrationType:(IntegrationType)integrationType withZoneID:(NSString *)zoneID;
 - (void)requestAdWithDelegate:(NSObject<HyBidAdRequestDelegate> *)delegate withZoneID:(NSString *)zoneID;

@@ -51,7 +51,6 @@ NSInteger const PNLiteResponseStatusRequestMalformed = 422;
 
 @interface HyBidAdRequest () <PNLiteHttpRequestDelegate>
 
-@property (nonatomic, weak) NSObject <HyBidAdRequestDelegate> *delegate;
 @property (nonatomic, assign) BOOL isRunning;
 @property (nonatomic, strong) NSString *zoneID;
 @property (nonatomic, strong) NSDate *startTime;
