@@ -35,13 +35,12 @@
 
 @implementation PNLiteDemoVASTTestingViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
+    [super viewDidLoad];
     [self setupUI];
 }
 
-- (void)setupUI
-{
+- (void)setupUI {
     [self setTitle:@"VAST Testing"];
     [self.segmentedControl setTitle:@"Interstitial" forSegmentAtIndex:0];
     [self.segmentedControl setTitle:@"MRect" forSegmentAtIndex:1];
@@ -62,8 +61,7 @@
     }
 }
 
-- (void)loadVASTTag
-{
+- (void)loadVASTTag {
     NSString *vastURL = [self.vastTextField text];
     if ([vastURL length] == 0) {
         NSError *error = [NSError errorWithDomain:@"Please input some vast adserver URL" code:0 userInfo:nil];
@@ -73,8 +71,7 @@
     }
 }
 
-- (void)loadVASTTagDirectlyFrom:(NSString *)url
-{
+- (void)loadVASTTagDirectlyFrom:(NSString *)url {
     self.interstitialAd = [[HyBidInterstitialAd alloc] initWithZoneID:nil andWithDelegate:self];
     [self.interstitialAd prepareVideoTagFrom:url];
 }

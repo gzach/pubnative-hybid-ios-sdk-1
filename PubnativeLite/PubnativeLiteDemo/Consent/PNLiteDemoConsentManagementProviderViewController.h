@@ -22,7 +22,8 @@
 
 #import <UIKit/UIKit.h>
 #import <HyBid/HyBid.h>
+#import "PNLiteDemoBaseViewController.h"
 
-@interface PNLiteDemoConsentManagementProviderViewController : UIViewController
+@interface PNLiteDemoConsentManagementProviderViewController : PNLiteDemoBaseViewController
 
 @end
