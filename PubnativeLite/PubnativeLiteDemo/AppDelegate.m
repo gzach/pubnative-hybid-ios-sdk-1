@@ -41,12 +41,12 @@ CLLocationManager *locationManager;
     [PNLiteDemoSettings sharedInstance];
     locationManager = [[CLLocationManager alloc] init];
     [locationManager requestWhenInUseAuthorization];
-    // setLocationTracking: Allowing SDK to track location , default is true.
+    // setLocationTracking: Allowing SDK to track location, default is true.
     [HyBid setLocationTracking:YES];
-    // setLocationUpdates: Allowing SDK to update location , default is false.
+    // setLocationUpdates: Allowing SDK to update location, default is false.
     [HyBid setLocationUpdates:NO];
-    /*
-    if (@available(iOS 14, *)) {
+    
+    if (@available(iOS 14.5, *)) {
         [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler: ^(ATTrackingManagerAuthorizationStatus status) {
             switch (status) {
                 case ATTrackingManagerAuthorizationStatusAuthorized:
@@ -66,7 +66,7 @@ CLLocationManager *locationManager;
             }
         }];
     }
-    */
+    
     [PNLiteDemoMoPubManager initMoPubSDKWithAppToken:[[NSUserDefaults standardUserDefaults] stringForKey:kHyBidDemoAppTokenKey]
                                         withAdUnitID:[[NSUserDefaults standardUserDefaults] stringForKey:kHyBidMoPubHeaderBiddingBannerAdUnitIDKey]];
     [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
@@ -75,6 +75,8 @@ CLLocationManager *locationManager;
     
     [HyBid reportingManager].delegate = self;
     [HyBid setInterstitialSkipOffset:10];
+    [HyBid setInterstitialCloseOnFinish:YES];
+    [HyBid setVideoAudioStatus:HyBidAudioStatusDefault];
     return YES;
 }
 

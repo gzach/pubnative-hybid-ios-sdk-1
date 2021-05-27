@@ -27,8 +27,9 @@
 #import "UIApplication+PNLiteTopViewController.h"
 #import "HyBidLogger.h"
 #import "HyBidSKAdNetworkViewController.h"
+#import "HyBidURLDriller.h"
 
-@interface PNLiteMRAIDInterstitialPresenter() <HyBidMRAIDViewDelegate, HyBidMRAIDServiceDelegate>
+@interface PNLiteMRAIDInterstitialPresenter() <HyBidMRAIDViewDelegate, HyBidMRAIDServiceDelegate, HyBidURLDrillerDelegate>
 
 @property (nonatomic, strong) HyBidMRAIDServiceProvider *serviceProvider;
 @property (nonatomic, retain) HyBidMRAIDView *mraidView;
@@ -61,7 +62,7 @@
     self.mraidView = [[HyBidMRAIDView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)
                                               withHtmlData:self.adModel.htmlData
                                                withBaseURL:[NSURL URLWithString:self.adModel.htmlUrl]
-                                         supportedFeatures:@[PNLiteMRAIDSupportsSMS, PNLiteMRAIDSupportsTel, PNLiteMRAIDSupportsCalendar, PNLiteMRAIDSupportsStorePicture, PNLiteMRAIDSupportsInlineVideo]
+                                         supportedFeatures:@[PNLiteMRAIDSupportsSMS, PNLiteMRAIDSupportsTel, PNLiteMRAIDSupportsStorePicture, PNLiteMRAIDSupportsInlineVideo]
                                              isInterstital:YES
                                                   delegate:self
                                            serviceDelegate:self
@@ -120,6 +121,7 @@
     if (skAdNetworkModel) {
         NSDictionary* productParams = [skAdNetworkModel getStoreKitParameters];
         if ([productParams count] > 0) {
+            [[HyBidURLDriller alloc] startDrillWithURLString:url.absoluteString delegate:self];
             dispatch_async(dispatch_get_main_queue(), ^{
                 HyBidSKAdNetworkViewController *skAdnetworkViewController = [[HyBidSKAdNetworkViewController alloc] initWithProductParameters:productParams];
 
@@ -147,10 +149,6 @@
     [self.serviceProvider sendSMS:urlString];
 }
 
-- (void)mraidServiceCreateCalendarEventWithEventJSON:(NSString *)eventJSON {
-    [self.serviceProvider createEvent:eventJSON];
-}
-
 - (void)mraidServiceOpenBrowserWithUrlString:(NSString *)urlString {
     [self.delegate interstitialPresenterDidClick:self];
     
@@ -159,6 +157,7 @@
     if (skAdNetworkModel) {
         NSDictionary* productParams = [skAdNetworkModel getStoreKitParameters];
         if ([productParams count] > 0) {
+            [[HyBidURLDriller alloc] startDrillWithURLString:urlString delegate:self];
             dispatch_async(dispatch_get_main_queue(), ^{
                 HyBidSKAdNetworkViewController *skAdnetworkViewController = [[HyBidSKAdNetworkViewController alloc] initWithProductParameters:productParams];
 
@@ -179,4 +178,5 @@
 - (void)mraidServiceStorePictureWithUrlString:(NSString *)urlString {
     [self.serviceProvider storePicture:urlString];
 }
+
 @end

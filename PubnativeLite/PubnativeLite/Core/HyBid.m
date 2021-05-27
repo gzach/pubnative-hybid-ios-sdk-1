@@ -51,13 +51,18 @@ NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
 + (void)initWithAppToken:(NSString *)appToken completion:(HyBidCompletionBlock)completion {
     if (!appToken || appToken.length == 0) {
         [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"App Token is nil or empty and required."];
+        if (completion) {
+            completion(false);
+        }
     } else {
         [HyBidSettings sharedInstance].appToken = appToken;
         [HyBidSettings sharedInstance].apiURL = HyBidBaseURL;
         [HyBidSettings sharedInstance].openRtbApiURL = HyBidOpenRTBURL;
         [HyBidViewabilityManager sharedInstance];
         [[HyBidUserDataManager sharedInstance] createUserDataManagerWithCompletion:^(BOOL success) {
-            completion(success);
+            if (completion) {
+                completion(success);
+            }
         }];
     }
 }
@@ -79,8 +84,16 @@ NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
     [HyBidSettings sharedInstance].skipOffset = seconds;
 }
 
++ (void)setInterstitialCloseOnFinish:(BOOL)closeOnFinish {
+    [HyBidSettings sharedInstance].closeOnFinish = closeOnFinish;
+}
+
 + (HyBidReportingManager *)reportingManager {
     return HyBidReportingManager.sharedInstance;
+}
+
++ (void)setVideoAudioStatus:(HyBidAudioStatus)audioStatus {
+    [HyBidSettings sharedInstance].audioStatus = audioStatus;
 }
 
 @end

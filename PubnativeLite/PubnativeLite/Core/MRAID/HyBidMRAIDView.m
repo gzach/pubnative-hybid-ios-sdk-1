@@ -214,7 +214,6 @@ typedef enum {
         mraidFeatures = @[
                           PNLiteMRAIDSupportsSMS,
                           PNLiteMRAIDSupportsTel,
-                          PNLiteMRAIDSupportsCalendar,
                           PNLiteMRAIDSupportsStorePicture,
                           PNLiteMRAIDSupportsInlineVideo,
                           ];
@@ -325,7 +324,6 @@ typedef enum {
     NSArray *kFeatures = @[
                            PNLiteMRAIDSupportsSMS,
                            PNLiteMRAIDSupportsTel,
-                           PNLiteMRAIDSupportsCalendar,
                            PNLiteMRAIDSupportsStorePicture,
                            PNLiteMRAIDSupportsInlineVideo,
                            ];
@@ -406,12 +404,14 @@ typedef enum {
 - (void)showAsInterstitial {
     [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat: @"%@", NSStringFromSelector(_cmd)]];
     [self expand:nil supportVerve:NO];
+    [self setIsViewable:YES];
 }
 
 - (void)showAsInterstitialFromViewController:(UIViewController *)viewController {
     [self setRootViewController:viewController];
     [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat: @"%@", NSStringFromSelector(_cmd)]];
     [self expand:nil supportVerve:NO];
+    [self setIsViewable:YES];
 }
 
 - (void)hide {
@@ -508,24 +508,6 @@ typedef enum {
     [self fireSizeChangeEvent];
     if ([self.delegate respondsToSelector:@selector(mraidViewDidClose:)]) {
         [self.delegate mraidViewDidClose:self];
-    }
-}
-
-- (void)createCalendarEvent:(NSString *)eventJSON {
-    if(!bonafideTapObserved && PNLite_SUPPRESS_BANNER_AUTO_REDIRECT) {
-        [HyBidLogger infoLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Suppressing an attempt to programmatically call mraid.createCalendarEvent() when no UI touch event exists."];
-        return;  // ignore programmatic touches (taps)
-    }
-    
-    eventJSON=[eventJSON stringByRemovingPercentEncoding];
-    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat: @"JS callback %@ %@", NSStringFromSelector(_cmd), eventJSON]];
-    
-    if ([supportedFeatures containsObject:PNLiteMRAIDSupportsCalendar]) {
-        if ([self.serviceDelegate respondsToSelector:@selector(mraidServiceCreateCalendarEventWithEventJSON:)]) {
-            [self.serviceDelegate mraidServiceCreateCalendarEventWithEventJSON:eventJSON];
-        }
-    } else {
-        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"No calendar support has been included."]];
     }
 }
 
@@ -1133,7 +1115,10 @@ typedef enum {
             [self fireReadyEvent];
             
             if ([self.delegate respondsToSelector:@selector(mraidViewAdReady:)]) {
-                self.isViewable = YES;
+                // Interstitials isViewable flag will be fired only when they are showing.
+                if (!isInterstitial) {
+                    self.isViewable = YES;
+                }
                 [self.delegate mraidViewAdReady:self];
             }
             
@@ -1310,7 +1295,6 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
     NSString *command = [commandDict valueForKey:@"command"];
     NSObject *paramObj = [commandDict valueForKey:@"paramObj"];
     
-    NSLog(@"commandDict %@", commandDict);
     if ([command isEqualToString:@"expand:"]) {
         command = @"expand:supportVerve:";
     }

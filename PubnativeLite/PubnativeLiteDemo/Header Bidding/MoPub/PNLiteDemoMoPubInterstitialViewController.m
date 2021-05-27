@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *interstitialLoaderIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *inspectRequestButton;
 @property (weak, nonatomic) IBOutlet UILabel *creativeIdLabel;
+@property (weak, nonatomic) IBOutlet UIButton *showAdButton;
 @property (nonatomic, strong) MPInterstitialAdController *moPubInterstitial;
 @property (nonatomic, strong) HyBidInterstitialAdRequest *interstitialAdRequest;
 
@@ -53,21 +54,28 @@
 }
 
 - (void)requestAd {
+    [self setCreativeIDLabelWithString:@"_"];
     [self clearLastInspectedRequest];
     self.inspectRequestButton.hidden = YES;
+    self.showAdButton.hidden = YES;
     [self.interstitialLoaderIndicator startAnimating];
     self.interstitialAdRequest = [[HyBidInterstitialAdRequest alloc] init];
     [self.interstitialAdRequest requestAdWithDelegate:self withZoneID:[[NSUserDefaults standardUserDefaults] stringForKey:kHyBidDemoZoneIDKey]];
+}
+
+- (IBAction)showInterstitialAdButtonTapped:(UIButton *)sender {
+    if (self.moPubInterstitial.ready) {
+        [self.moPubInterstitial showFromViewController:self];
+    }
 }
 
 #pragma mark - MPInterstitialAdControllerDelegate
 
 - (void)interstitialDidLoadAd:(MPInterstitialAdController *)interstitial {
     NSLog(@"interstitialDidLoadAd");
+    self.inspectRequestButton.hidden = NO;
+    self.showAdButton.hidden = NO;
     [self.interstitialLoaderIndicator stopAnimating];
-    if (self.moPubInterstitial.ready) {
-        [self.moPubInterstitial showFromViewController:self];
-    }
 }
 
 - (void)interstitialDidFailToLoadAd:(MPInterstitialAdController *)interstitial withError:(NSError *)error {
@@ -76,16 +84,17 @@
     [self showAlertControllerWithMessage:@"MoPub Interstitial did fail to load."];
 }
 
-- (void)interstitialWillAppear:(MPInterstitialAdController *)interstitial {
-    NSLog(@"interstitialWillAppear");
+- (void)interstitialWillPresent:(MPInterstitialAdController *)interstitial {
+    NSLog(@"interstitialWillPresent");
 }
 
-- (void)interstitialDidAppear:(MPInterstitialAdController *)interstitial {
-    NSLog(@"interstitialDidAppear");
+- (void)interstitialDidPresent:(MPInterstitialAdController *)interstitial {
+    NSLog(@"interstitialDidPresent");
 }
 
 - (void)interstitialWillDismiss:(MPInterstitialAdController *)interstitial {
     NSLog(@"interstitialWillDismiss");
+    self.showAdButton.hidden = YES;
 }
 
 - (void)interstitialDidDismiss:(MPInterstitialAdController *)interstitial {
@@ -100,6 +109,11 @@
     NSLog(@"interstitialDidReceiveTapEvent");
 }
 
+- (void)setCreativeIDLabelWithString:(NSString *)string {
+    self.creativeIdLabel.text = [NSString stringWithFormat:@"%@", string];
+    self.creativeIdLabel.accessibilityValue = [NSString stringWithFormat:@"%@", string];
+}
+
 #pragma mark - HyBidAdRequestDelegate
 
 - (void)requestDidStart:(HyBidAdRequest *)request {
@@ -108,8 +122,7 @@
 
 - (void)request:(HyBidAdRequest *)request didLoadWithAd:(HyBidAd *)ad {
     NSLog(@"Request loaded with ad: %@",ad);
-    self.creativeIdLabel.text = [NSString stringWithFormat:@"%@", ad.creativeID];
-    self.creativeIdLabel.accessibilityValue = [NSString stringWithFormat:@"%@", ad.creativeID];
+    [self setCreativeIDLabelWithString:ad.creativeID];
     
     if (request == self.interstitialAdRequest) {
         self.inspectRequestButton.hidden = NO;

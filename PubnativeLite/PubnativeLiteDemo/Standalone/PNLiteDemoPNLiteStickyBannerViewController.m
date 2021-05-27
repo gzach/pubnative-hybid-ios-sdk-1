@@ -45,7 +45,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.bannerLoaderIndicator stopAnimating];
     self.navigationItem.title = @"HyBid Sticky Banner";
     self.bannerAdView = [[HyBidAdView alloc] initWithSize:[PNLiteDemoSettings sharedInstance].adSize];
     self.bannerPosition = TOP;
@@ -69,6 +69,7 @@
 }
 
 - (void)requestAd {
+    [self setCreativeIDLabelWithString:@"_"];
     [self clearLastInspectedRequest];
     self.bannerAdView.hidden = YES;
     self.inspectRequestButton.hidden = YES;
@@ -76,12 +77,16 @@
     [self.bannerAdView loadWithZoneID:[[NSUserDefaults standardUserDefaults] stringForKey:kHyBidDemoZoneIDKey] withPosition:self.bannerPosition andWithDelegate:self];
 }
 
+- (void)setCreativeIDLabelWithString:(NSString *)string {
+    self.creativeIdLabel.text = [NSString stringWithFormat:@"%@", string];
+    self.creativeIdLabel.accessibilityValue = [NSString stringWithFormat:@"%@", string];
+}
+
 #pragma mark - HyBidAdViewDelegate
 
 - (void)adViewDidLoad:(HyBidAdView *)adView {
     NSLog(@"Banner Ad View did load:");
-    self.creativeIdLabel.text = [NSString stringWithFormat:@"%@", self.bannerAdView.ad.creativeID];
-    self.creativeIdLabel.accessibilityValue = [NSString stringWithFormat:@"%@", self.bannerAdView.ad.creativeID];
+    [self setCreativeIDLabelWithString:self.bannerAdView.ad.creativeID];
     self.bannerAdView.hidden = NO;
     self.inspectRequestButton.hidden = NO;
     [self.bannerLoaderIndicator stopAnimating];
