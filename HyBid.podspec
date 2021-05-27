@@ -47,7 +47,8 @@ Pod::Spec.new do |s|
   
   s.preserve_path = 'PubnativeLite/PubnativeLite/Core/HyBid.modulemap'
   s.module_map = 'PubnativeLite/PubnativeLite/Core/HyBid.modulemap'
-    
+  s.swift_version = '5.0'
+
   s.subspec 'Core' do |core|
     core.source_files          = 'PubnativeLite/PubnativeLite/Core/**/*.{swift,h,m}'
     core.resources            =  ['PubnativeLite/PubnativeLite/Resources/**/*', 'PubnativeLite/PubnativeLite/OMSDK-1.3.17/*.js', 'PubnativeLite/PubnativeLite/Core/MRAID/*.js']

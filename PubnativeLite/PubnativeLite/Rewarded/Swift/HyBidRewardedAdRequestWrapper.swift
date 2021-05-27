@@ -22,29 +22,6 @@
 
 import Foundation
 
-class HyBidIntersitialAdRequestWrapper: NSObject, HyBidAdRequestDelegate {
-
-    private weak var parent: HyBidInterstitialAd?
-    
-    init(parent: HyBidInterstitialAd) {
-        super.init()
-        self.parent = parent
-    }
-    
-    func requestDidStart(_ request: HyBidAdRequest!) {
-        parent?.requestDidStart(request)
-    }
-    
-    func request(_ request: HyBidAdRequest!, didLoadWith ad: HyBidAd!) {
-        parent?.request(request, didLoadWithAd: ad)
-    }
-    
-    func request(_ request: HyBidAdRequest!, didFailWithError error: Error!) {
-        parent?.request(request, didFailWithError: error)
-    }
-    
-}
-
 class HyBidRewardedAdRequestWrapper: NSObject, HyBidAdRequestDelegate {
 
     private weak var parent: HyBidRewardedAd?
@@ -67,3 +44,4 @@ class HyBidRewardedAdRequestWrapper: NSObject, HyBidAdRequestDelegate {
     }
 
 }
+
