@@ -35,7 +35,6 @@
 
 @property (nonatomic, strong) HyBidInterstitialPresenter *interstitialPresenter;
 @property (nonatomic, strong) HyBidAdTracker *adTracker;
-@property (nonatomic, weak) NSObject<HyBidInterstitialPresenterDelegate> *interstitialPresenterDelegate;
 
 @end
 

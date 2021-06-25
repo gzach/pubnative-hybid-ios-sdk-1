@@ -1,5 +1,5 @@
 //
-//  Copyright © 2020 PubNative. All rights reserved.
+//  Copyright © 2021 PubNative. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,27 +20,13 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+#import <Foundation/Foundation.h>
+#import "HyBidBaseModel.h"
 
-class HyBidIntersitialAdRequestWrapper: NSObject, HyBidAdRequestDelegate {
+@interface HyBidSignalDataModel : HyBidBaseModel
 
-    private weak var parent: HyBidInterstitialAd?
-    
-    init(parent: HyBidInterstitialAd) {
-        super.init()
-        self.parent = parent
-    }
-    
-    func requestDidStart(_ request: HyBidAdRequest!) {
-        parent?.requestDidStart(request)
-    }
-    
-    func request(_ request: HyBidAdRequest!, didLoadWith ad: HyBidAd!) {
-        parent?.request(request, didLoadWithAd: ad)
-    }
-    
-    func request(_ request: HyBidAdRequest!, didFailWithError error: Error!) {
-        parent?.request(request, didFailWithError: error)
-    }
-    
-}
+@property (nonatomic, strong) NSString *status;
+@property (nonatomic, strong) NSString *tagid;
+@property (nonatomic, strong) NSString *admurl;
+
+@end

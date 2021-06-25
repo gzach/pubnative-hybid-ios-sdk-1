@@ -35,6 +35,7 @@
 
 NSString *const HyBidBaseURL = @"https://api.pubnative.net";
 NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
+BOOL isInitialized = NO;
 
 @implementation HyBid
 
@@ -57,6 +58,7 @@ NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
 + (void)initWithAppToken:(NSString *)appToken completion:(HyBidCompletionBlock)completion {
     if (!appToken || appToken.length == 0) {
         [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"App Token is nil or empty and required."];
+        isInitialized = NO;
         if (completion) {
             completion(false);
         }
@@ -65,12 +67,17 @@ NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
         [HyBidSettings sharedInstance].apiURL = HyBidBaseURL;
         [HyBidSettings sharedInstance].openRtbApiURL = HyBidOpenRTBURL;
         [HyBidViewabilityManager sharedInstance];
+        isInitialized = YES;
         [[HyBidUserDataManager sharedInstance] createUserDataManagerWithCompletion:^(BOOL success) {
             if (completion) {
                 completion(success);
             }
         }];
     }
+}
+
++ (BOOL)isInitialized {
+    return isInitialized;
 }
 
 + (void) setLocationUpdates:(BOOL)enabled {
@@ -81,8 +88,7 @@ NSString *const HyBidOpenRTBURL = @"https://dsp.pubnative.net";
     PNLiteLocationManager.locationTrackingEnabled = enabled;
 }
 
-+ (NSString *)sdkVersion
-{
++ (NSString *)sdkVersion {
     return HyBidConstants.HYBID_SDK_VERSION;
 }
 

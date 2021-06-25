@@ -25,10 +25,7 @@ import Foundation
 @objc
 public protocol HyBidRewardedAdDelegate: AnyObject {
     func rewardedDidLoad()
-    
-    @objc(rewardedDidFailWithError:)
-    func rewardedDidFailWithError(error: Error)
-    
+    func rewardedDidFailWithError(_ error: Error)
     func rewardedDidTrackImpression()
     func rewardedDidTrackClick()
     func rewardedDidDismiss()
@@ -51,9 +48,12 @@ public class HyBidRewardedAd: NSObject {
     private var rewardedPresenter: HyBidRewardedPresenter?
     private var rewardedAdRequest: HyBidRewardedAdRequest?
     
-    @objc
-    public convenience init(zoneID: String, andWithDelegate delegate: HyBidRewardedAdDelegate) {
+    @objc(initWithZoneID:andWithDelegate:)
+    public convenience init(zoneID: String, andWith delegate: HyBidRewardedAdDelegate) {
         self.init()
+        if !HyBid.isInitialized() {
+            HyBidLogger.warningLog(fromClass: String(describing: HyBidRewardedAd.self), methodName: #function, message: "HyBid SDK was not initialized. Please initialize it before creating a HyBidRewardedAd. Check out https://github.com/pubnative/pubnative-hybid-ios-sdk/wiki/Setup-HyBid for the setup process.")
+        }
         self.rewardedAdRequest = HyBidRewardedAdRequest()
         self.rewardedAdRequest?.openRTBAdType = VIDEO
         self.zoneID = zoneID
@@ -61,7 +61,7 @@ public class HyBidRewardedAd: NSObject {
     }
     
     convenience init(delegate: HyBidRewardedAdDelegate) {
-        self.init(zoneID: "", andWithDelegate: delegate)
+        self.init(zoneID: "", andWith: delegate)
     }
     
     func cleanUp() {
@@ -94,8 +94,8 @@ public class HyBidRewardedAd: NSObject {
     
     func processAdContent(adContent: String) {
         let signalDataProcessor = HyBidSignalDataProcessor()
-        signalDataProcessor.delegate = self
-        signalDataProcessor.processSignalData(adContent, withZoneID: self.zoneID)
+        signalDataProcessor.delegate = HyBidRewardedSignalDataProcessorWrapper(parent: self)
+        signalDataProcessor.processSignalData(adContent)
     }
     
     @objc
@@ -122,7 +122,7 @@ public class HyBidRewardedAd: NSObject {
     
     func renderAd(ad: HyBidAd) {
         let rewardedPresenterFactory = HyBidRewardedPresenterFactory()
-        self.rewardedPresenter = rewardedPresenterFactory.createRewardedPresenter(with: ad, with: self)
+        self.rewardedPresenter = rewardedPresenterFactory.createRewardedPresenter(with: ad, with: HyBidRewardedPresenterWrapper(parent: self))
             
         if (self.rewardedPresenter == nil) {
             HyBidLogger.errorLog(fromClass: String(describing: HyBidRewardedAd.self), methodName: #function, message: "Could not create valid rewarded presenter.")
@@ -144,7 +144,7 @@ public class HyBidRewardedAd: NSObject {
         HyBidLogger.errorLog(fromClass: String(describing: HyBidRewardedAd.self), methodName: #function, message: error.localizedDescription)
         
         if let delegate = delegate {
-            delegate.rewardedDidFailWithError(error: error)
+            delegate.rewardedDidFailWithError(error)
         }
     }
     
@@ -183,12 +183,12 @@ public class HyBidRewardedAd: NSObject {
 // MARK: - HyBidAdRequestDelegate
 
 extension HyBidRewardedAd {
-    public func requestDidStart(_ request: HyBidAdRequest) {
+    func requestDidStart(_ request: HyBidAdRequest) {
         let message = "Ad Request \(String(describing: request)) started"
         HyBidLogger.debugLog(fromClass: String(describing: HyBidRewardedAd.self), methodName: #function, message: message)
     }
 
-    public func request(_ request: HyBidAdRequest, didLoadWithAd ad: HyBidAd?) {
+    func request(_ request: HyBidAdRequest, didLoadWithAd ad: HyBidAd?) {
         let message = "Ad Request \(String(describing: request)) loaded with ad \(String(describing: ad))"
         HyBidLogger.debugLog(fromClass: String(describing: HyBidRewardedAd.self), methodName: #function, message: message)
 
@@ -202,49 +202,49 @@ extension HyBidRewardedAd {
         }
     }
 
-    public func request(_ requst: HyBidAdRequest, didFailWithError error: Error) {
+    func request(_ requst: HyBidAdRequest, didFailWithError error: Error) {
         self.invokeDidFailWithError(error: error)
     }
 }
 
 // MARK: - HyBidRewardedPresenterDelegate
 
-extension HyBidRewardedAd: HyBidRewardedPresenterDelegate {
-    public func rewardedPresenterDidLoad(_ rewardedPresenter: HyBidRewardedPresenter!) {
+extension HyBidRewardedAd {
+    func rewardedPresenterDidLoad(_ rewardedPresenter: HyBidRewardedPresenter!) {
         self.isReady = true
         self.invokeDidLoad()
     }
     
-    public func rewardedPresenter(_ rewardedPresenter: HyBidRewardedPresenter!, didFailWithError error: Error!) {
+    func rewardedPresenter(_ rewardedPresenter: HyBidRewardedPresenter!, didFailWithError error: Error!) {
         self.invokeDidFailWithError(error: error)
     }
 
-    public func rewardedPresenterDidShow(_ rewardedPresenter: HyBidRewardedPresenter!) {
+    func rewardedPresenterDidShow(_ rewardedPresenter: HyBidRewardedPresenter!) {
         self.invokeDidTrackImpression()
     }
 
-    public func rewardedPresenterDidClick(_ rewardedPresenter: HyBidRewardedPresenter!) {
+    func rewardedPresenterDidClick(_ rewardedPresenter: HyBidRewardedPresenter!) {
         self.invokeDidTrackClick()
     }
 
-    public func rewardedPresenterDidDismiss(_ rewardedPresenter: HyBidRewardedPresenter!) {
+    func rewardedPresenterDidDismiss(_ rewardedPresenter: HyBidRewardedPresenter!) {
         self.invokeDidDismiss()
     }
     
-    public func rewardedPresenterDidFinish(_ rewardedPresenter: HyBidRewardedPresenter!) {
+    func rewardedPresenterDidFinish(_ rewardedPresenter: HyBidRewardedPresenter!) {
         self.invokeOnReward()
     }
 }
 
 // MARK: - HyBidSignalDataProcessorDelegate
-extension HyBidRewardedAd: HyBidSignalDataProcessorDelegate {
-    public func signalDataDidFinish(with ad: HyBidAd) {
+extension HyBidRewardedAd {
+    func signalDataDidFinish(with ad: HyBidAd) {
         self.ad = ad
         self.ad?.adType = Int(kHyBidAdTypeVideo)
         self.renderAd(ad: ad)
     }
     
-    public func signalDataDidFailWithError(_ error: Error) {
+    func signalDataDidFailWithError(_ error: Error) {
         invokeDidFailWithError(error: error)
     }
 }

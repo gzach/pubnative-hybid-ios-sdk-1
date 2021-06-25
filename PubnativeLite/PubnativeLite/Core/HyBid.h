@@ -138,6 +138,7 @@ typedef enum {
 + (void)setLocationTracking:(BOOL)enabled;
 + (void)setAppStoreAppID:(NSString *)appID;
 + (NSString *)sdkVersion;
++ (BOOL)isInitialized;
 + (void)setInterstitialSkipOffset:(NSInteger)seconds;
 + (HyBidReportingManager *)reportingManager;
 + (void)setVideoAudioStatus:(HyBidAudioStatus)audioStatus;

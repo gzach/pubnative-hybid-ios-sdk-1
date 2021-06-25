@@ -26,6 +26,7 @@
 #import "HyBidWebBrowserUserAgentInfo.h"
 #import "HyBidRequestParameter.h"
 #import "HyBidSkAdNetworkRequestModel.h"
+#import "HyBid.h"
 
 #if __has_include(<HyBid/HyBid-Swift.h>)
     #import <UIKit/UIKit.h>
@@ -66,6 +67,10 @@ NSInteger const MAX_RETRIES = 1;
     self.delegate = delegate;
     self.urlString = urlString;
     self.method = method;
+    
+    if (![HyBid isInitialized]) {
+        [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"HyBid SDK was not initialized. Please initialize it before making any requests. Check out https://github.com/pubnative/pubnative-hybid-ios-sdk/wiki/Setup-HyBid for the setup process."];
+    }
     
     if (self.isUsingOpenRTB) {
         NSArray *headerObjects = [NSArray arrayWithObjects:@"2.3", @"application/json", @"utf-8", nil];
