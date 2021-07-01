@@ -48,9 +48,6 @@ Pod::Spec.new do |s|
   s.preserve_path = 'PubnativeLite/PubnativeLite/Core/HyBid.modulemap'
   s.module_map = 'PubnativeLite/PubnativeLite/Core/HyBid.modulemap'
   s.swift_version = '5.0'
-  s.pod_target_xcconfig = {
-    'OTHER_SWIFT_FLAGS[config=Debug]' => '-Xcc -Wno-incomplete-umbrella'
-  }
 
   s.subspec 'Core' do |core|
     core.source_files          = 'PubnativeLite/PubnativeLite/Core/**/*.{swift,h,m}'
@@ -60,6 +57,10 @@ Pod::Spec.new do |s|
 
     core.pod_target_xcconfig = { 'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/HyBid/module' }
     core.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2 $(PODS_ROOT)/HyBid/module' }
+    
+    core.pod_target_xcconfig = {
+      'OTHER_SWIFT_FLAGS[config=Debug]' => '-Xcc -Wno-incomplete-umbrella'
+    }
   end
 
   s.subspec 'Banner' do |banner|
@@ -69,7 +70,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Native' do |native|
     native.dependency           'HyBid/Core'
-        native.source_files     = ['PubnativeLite/PubnativeLite/Native/**/*.{swift,h,m}']
+    native.source_files     = ['PubnativeLite/PubnativeLite/Native/**/*.{swift,h,m}']
   end
 
   s.subspec 'FullScreen' do |fullscreen|
@@ -83,3 +84,4 @@ Pod::Spec.new do |s|
   end
 
 end
+
