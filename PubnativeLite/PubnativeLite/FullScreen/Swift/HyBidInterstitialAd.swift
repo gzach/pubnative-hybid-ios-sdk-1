@@ -25,8 +25,7 @@ import Foundation
 @objc
 public protocol HyBidInterstitialAdDelegate: AnyObject {
     func interstitialDidLoad()
-    @objc(interstitialDidFailWithError:)
-    func interstitialDidFailWithError(error: Error)
+    func interstitialDidFailWithError(_ error: Error)
     func interstitialDidTrackImpression()
     func interstitialDidTrackClick()
     func interstitialDidDismiss()
@@ -50,9 +49,12 @@ public class HyBidInterstitialAd: NSObject {
     private var skipOffset: Int?
     private var closeOnFinish = false
 
-    @objc
-    public convenience init(zoneID: String, andWithDelegate delegate: HyBidInterstitialAdDelegate) {
+    @objc(initWithZoneID:andWithDelegate:)
+    public convenience init(zoneID: String?, andWith delegate: HyBidInterstitialAdDelegate) {
         self.init()
+        if !HyBid.isInitialized() {
+            HyBidLogger.warningLog(fromClass: String(describing: HyBidInterstitialAd.self), methodName: #function, message: "HyBid SDK was not initialized. Please initialize it before creating a HyBidInterstitialAd. Check out https://github.com/pubnative/pubnative-hybid-ios-sdk/wiki/Setup-HyBid for the setup process.")
+        }
         self.interstitialAdRequest = HyBidInterstitialAdRequest()
         self.interstitialAdRequest?.openRTBAdType = VIDEO
         self.zoneID = zoneID
@@ -66,7 +68,7 @@ public class HyBidInterstitialAd: NSObject {
     }
     
     convenience init(delegate: HyBidInterstitialAdDelegate) {
-        self.init(zoneID: "", andWithDelegate: delegate)
+        self.init(zoneID: "", andWith: delegate)
     }
     
     func cleanUp() {
@@ -80,7 +82,7 @@ public class HyBidInterstitialAd: NSObject {
         if let zoneID = self.zoneID, zoneID.count > 0 {
             self.isReady = false
             self.interstitialAdRequest?.setIntegrationType(self.isMediation ? MEDIATION : STANDALONE, withZoneID: zoneID)
-            self.interstitialAdRequest?.requestAd(with: HyBidIntersitialAdRequestWrapper(parent: self), withZoneID: zoneID)
+            self.interstitialAdRequest?.requestAd(with: HyBidInterstitialAdRequestWrapper(parent: self), withZoneID: zoneID)
         } else {
             let error = NSError(domain: "Invalid Zone ID provided.", code: 0, userInfo: nil)
             invokeDidFailWithError(error: error)
@@ -99,7 +101,7 @@ public class HyBidInterstitialAd: NSObject {
     
     @objc(prepareVideoTagFrom:)
     public func prepareVideoTagFrom(url: String) {
-        self.interstitialAdRequest?.requestVideoTag(from: url, andWith: HyBidIntersitialAdRequestWrapper(parent: self))
+        self.interstitialAdRequest?.requestVideoTag(from: url, andWith: HyBidInterstitialAdRequestWrapper(parent: self))
     }
     
     @objc
@@ -122,7 +124,7 @@ public class HyBidInterstitialAd: NSObject {
     
     func renderAd(ad: HyBidAd) {
         let interstitalPresenterFactory = HyBidInterstitialPresenterFactory()
-        self.interstitialPresenter = interstitalPresenterFactory.createInterstitalPresenter(with: ad, withSkipOffset: UInt(self.skipOffset ?? 0), withCloseOnFinish: self.closeOnFinish, with: self)
+        self.interstitialPresenter = interstitalPresenterFactory.createInterstitalPresenter(with: ad, withSkipOffset: UInt(self.skipOffset ?? 0), withCloseOnFinish: self.closeOnFinish, with: HyBidInterstitialPresenterWrapper(parent: self))
         
         if (self.interstitialPresenter == nil) {
             HyBidLogger.errorLog(fromClass: String(describing: HyBidInterstitialAd.self), methodName: #function, message: "Could not create valid interstitial presenter.")
@@ -146,8 +148,8 @@ public class HyBidInterstitialAd: NSObject {
     
     func processAdContent(adContent: String) {
         let signalDataProcessor = HyBidSignalDataProcessor()
-        signalDataProcessor.delegate = self
-        signalDataProcessor.processSignalData(adContent, withZoneID: self.zoneID)
+        signalDataProcessor.delegate = HyBidInterstitialSignalDataProcessorWrapper(parent: self)
+        signalDataProcessor.processSignalData(adContent)
     }
     
     @objc(setSkipOffset:)
@@ -166,7 +168,7 @@ public class HyBidInterstitialAd: NSObject {
         HyBidLogger.errorLog(fromClass: String(describing: HyBidInterstitialAd.self), methodName: #function, message: error.localizedDescription)
         
         if let delegate = delegate {
-            delegate.interstitialDidFailWithError(error: error)
+            delegate.interstitialDidFailWithError(error)
         }
     }
     
@@ -225,38 +227,38 @@ extension HyBidInterstitialAd {
 
 // MARK: - HyBidInterstitialPresenterDelegate
 
-extension HyBidInterstitialAd: HyBidInterstitialPresenterDelegate {
-    public func interstitialPresenterDidLoad(_ interstitialPresenter: HyBidInterstitialPresenter!) {
+extension HyBidInterstitialAd {
+    func interstitialPresenterDidLoad(_ interstitialPresenter: HyBidInterstitialPresenter!) {
         self.isReady = true
         self.invokeDidLoad()
     }
     
-    public func interstitialPresenterDidShow(_ interstitialPresenter: HyBidInterstitialPresenter!) {
+    func interstitialPresenterDidShow(_ interstitialPresenter: HyBidInterstitialPresenter!) {
         self.invokeDidTrackImpression()
     }
     
-    public func interstitialPresenterDidClick(_ interstitialPresenter: HyBidInterstitialPresenter!) {
+    func interstitialPresenterDidClick(_ interstitialPresenter: HyBidInterstitialPresenter!) {
         self.invokeDidTrackClick()
     }
     
-    public func interstitialPresenterDidDismiss(_ interstitialPresenter: HyBidInterstitialPresenter!) {
+    func interstitialPresenterDidDismiss(_ interstitialPresenter: HyBidInterstitialPresenter!) {
         self.invokeDidDismiss()
     }
     
-    public func interstitialPresenter(_ interstitialPresenter: HyBidInterstitialPresenter!, didFailWithError error: Error!) {
+    func interstitialPresenter(_ interstitialPresenter: HyBidInterstitialPresenter!, didFailWithError error: Error!) {
         self.invokeDidFailWithError(error: error)
     }
 }
 
 // MARK: - HyBidSignalDataProcessorDelegate
 
-extension HyBidInterstitialAd: HyBidSignalDataProcessorDelegate {
-    public func signalDataDidFinish(with ad: HyBidAd) {
+extension HyBidInterstitialAd {
+    func signalDataDidFinish(with ad: HyBidAd) {
         self.ad = ad
         self.renderAd(ad: ad)
     }
     
-    public func signalDataDidFailWithError(_ error: Error) {
+    func signalDataDidFailWithError(_ error: Error) {
         invokeDidFailWithError(error: error)
     }
 }

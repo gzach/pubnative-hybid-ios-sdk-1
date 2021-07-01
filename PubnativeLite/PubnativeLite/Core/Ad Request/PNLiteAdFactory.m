@@ -28,6 +28,7 @@
 #import "HyBidUserDataManager.h"
 #import "HyBidSkAdNetworkRequestModel.h"
 #import "HyBidRemoteConfigManager.h"
+#import "HyBidDisplayManager.h"
 #import <CoreLocation/CoreLocation.h>
 
 #if __has_include(<HyBid/HyBid-Swift.h>)
@@ -137,9 +138,9 @@
 }
 
 - (void)setDisplayManager:(PNLiteAdRequestModel *)adRequestModel withIntegrationType:(IntegrationType)integrationType {
-    adRequestModel.requestParameters[HyBidRequestParameter.displayManager] = HyBidConstants.HYBID_SDK_NAME;
-    adRequestModel.requestParameters[HyBidRequestParameter.displayManagerVersion] = [NSString stringWithFormat:@"%@_%@_%@", @"sdkios", [HyBidIntegrationType getIntegrationTypeCodeFromIntegrationType:integrationType] ,HyBidConstants.HYBID_SDK_VERSION];
-}
+    adRequestModel.requestParameters[HyBidRequestParameter.displayManager] = [HyBidDisplayManager getDisplayManager];
+    adRequestModel.requestParameters[HyBidRequestParameter.displayManagerVersion] = [HyBidDisplayManager setDisplayManager:integrationType];
+ }
 
 - (void)setIDFA:(PNLiteAdRequestModel *)adRequestModel {
     NSString *advertisingId = [HyBidSettings sharedInstance].advertisingId;

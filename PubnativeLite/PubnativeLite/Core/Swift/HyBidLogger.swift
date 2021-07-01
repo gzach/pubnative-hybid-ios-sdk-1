@@ -34,10 +34,10 @@ public enum HyBidLogLevel: Int {
 @objc
 public class HyBidLogger: NSObject {
     
-    @objc public static var logLevel: HyBidLogLevel = .Info
+    public static var logLevel: HyBidLogLevel = .Info
     
-    @objc
-    public func set(logLevel: HyBidLogLevel) {
+    @objc(setLogLevel:)
+    public static func setLogLevel(_ logLevel: HyBidLogLevel) {
         let levelNames = [
             "None",
             "Error",
@@ -54,32 +54,41 @@ public class HyBidLogger: NSObject {
     @objc
     public static func errorLog(fromClass className: String, methodName: String, message: String) {
         if (logLevel.rawValue >= HyBidLogLevel.Error.rawValue) {
-            internalLog(fromClass: className, methodName: methodName, message: message)
+            internalLog(fromClass: className, methodName: methodName, message: message, logLevel: .Error)
         }
     }
     
     @objc
     public static func warningLog(fromClass className: String, methodName: String, message: String) {
         if (logLevel.rawValue >= HyBidLogLevel.Warning.rawValue) {
-            internalLog(fromClass: className, methodName: methodName, message: message)
+            internalLog(fromClass: className, methodName: methodName, message: message, logLevel: .Warning)
         }
     }
     
     @objc
     public static func infoLog(fromClass className: String, methodName: String, message: String) {
         if (logLevel.rawValue >= HyBidLogLevel.Info.rawValue) {
-            internalLog(fromClass: className, methodName: methodName, message: message)
+            internalLog(fromClass: className, methodName: methodName, message: message, logLevel: .Info)
         }
     }
     
     @objc
     public static func debugLog(fromClass className: String, methodName: String, message: String) {
         if (logLevel.rawValue >= HyBidLogLevel.Debug.rawValue) {
-            internalLog(fromClass: className, methodName: methodName, message: message)
+            internalLog(fromClass: className, methodName: methodName, message: message, logLevel: .Debug)
         }
     }
     
-    static func internalLog(fromClass className: String, methodName: String, message: String) {
-        print("\n ----------------------- \n [LOG TYPE]: Error\n [CLASS]: \(className)\n [METHOD]: \(methodName) \n [MESSAGE]: \(message)\n -----------------------");
+    static func internalLog(fromClass className: String, methodName: String, message: String, logLevel: HyBidLogLevel) {
+        
+        var logLevelString = "Error"
+        switch logLevel {
+            case .Error: logLevelString = "Error"
+            case .Info: logLevelString = "Info"
+            case .Warning: logLevelString = "Warning"
+            default: logLevelString = "Debug"
+        }
+        
+        print("\n ----------------------- \n [LOG TYPE]: \(logLevelString)\n [CLASS]: \(className)\n [METHOD]: \(methodName) \n [MESSAGE]: \(message)\n -----------------------");
     }
 }

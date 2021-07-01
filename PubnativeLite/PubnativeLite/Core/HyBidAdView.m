@@ -27,6 +27,8 @@
 #import "HyBidRemoteConfigModel.h"
 #import "HyBidAuction.h"
 #import "HyBidVastTagAdSource.h"
+#import "HyBidSignalDataProcessor.h"
+#import "HyBid.h"
 
 #if __has_include(<HyBid/HyBid-Swift.h>)
     #import <UIKit/UIKit.h>
@@ -36,7 +38,7 @@
     #import "HyBid-Swift.h"
 #endif
 
-@interface HyBidAdView()
+@interface HyBidAdView() <HyBidSignalDataProcessorDelegate>
 
 @property (nonatomic, strong) HyBidAdPresenter *adPresenter;
 @property (nonatomic, strong) NSString *zoneID;
@@ -68,6 +70,9 @@
 - (instancetype)initWithSize:(HyBidAdSize *)adSize {
     self = [super initWithFrame:CGRectMake(0, 0, adSize.width, adSize.height)];
     if (self) {
+        if (![HyBid isInitialized]) {
+            [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) methodName:NSStringFromSelector(_cmd) message:@"HyBid SDK was not initialized. Please initialize it before creating a HyBidAdView. Check out https://github.com/pubnative/pubnative-hybid-ios-sdk/wiki/Setup-HyBid for the setup process."];
+        }
         self.adRequest = [[HyBidAdRequest alloc] init];
         self.adRequest.openRTBAdType = BANNER;
         self.auctionResponses = [[NSMutableArray alloc]init];
@@ -255,7 +260,7 @@
 - (void)processAdContent:(NSString *)adContent {
     HyBidSignalDataProcessor *signalDataProcessor = [[HyBidSignalDataProcessor alloc] init];
     signalDataProcessor.delegate = self;
-    [signalDataProcessor processSignalData:adContent withZoneID:self.zoneID];
+    [signalDataProcessor processSignalData:adContent];
 }
 
 - (void)startTracking {
