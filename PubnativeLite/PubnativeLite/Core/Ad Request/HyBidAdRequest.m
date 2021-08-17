@@ -282,7 +282,7 @@ NSInteger const PNLiteResponseStatusRequestMalformed = 422;
             response = [[PNLiteResponseModel alloc] initWithDictionary:jsonDictonary];
         }
         
-        if(!response) {
+        if(!response && !openRTBResponse) {
             NSError *error = [NSError errorWithDomain:@"Can't parse JSON from server"
                                                  code:0
                                              userInfo:nil];

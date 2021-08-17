@@ -45,9 +45,7 @@
     } else {
         self.delegate = delegate;
         NSString *url = [HyBidRemoteConfigEndpoints remoteConfigURL];
-        NSDictionary *headerDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"application/json",@"Content-Type",[NSString stringWithFormat:@"Bearer %@",appToken],@"Authorization", nil];
         PNLiteHttpRequest *request = [[PNLiteHttpRequest alloc] init];
-        request.header = headerDictionary;
         [request startWithUrlString:url withMethod:@"GET" delegate:self];
     }
 }
