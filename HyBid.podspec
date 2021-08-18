@@ -46,7 +46,9 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "9.0"
   s.source       = { :git => "https://github.com/pubnative/pubnative-hybid-ios-sdk.git", :tag => "2.5.4-beta1" }
-
+  s.xcconfig = {
+    'OTHER_LDFLAGS' => '-framework OMSDK_Pubnativenet'
+  }
   s.subspec 'Core' do |core|
     core.source_files          = 'PubnativeLite/PubnativeLite/Core/**/*.{swift,h,m}'
     core.resources            =  ['PubnativeLite/PubnativeLite/Resources/**/*', 'PubnativeLite/PubnativeLite/OMSDK-1.3.22/*.js', 'PubnativeLite/PubnativeLite/Core/MRAID/*.js']
@@ -75,3 +77,4 @@ Pod::Spec.new do |s|
   end
 
 end
+
