@@ -390,7 +390,6 @@
 		6234937225AC68A7000B2718 /* AnalyticsEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6234937125AC68A7000B2718 /* AnalyticsEventTableViewCell.m */; };
 		623F066926CBDCE400784089 /* omsdk.js in Resources */ = {isa = PBXBuildFile; fileRef = 623F066726CBDCE400784089 /* omsdk.js */; };
 		623F066D26CC5F8600784089 /* OMSDK_Pubnativenet.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 623F066826CBDCE400784089 /* OMSDK_Pubnativenet.xcframework */; };
-		623F066E26CC5F8600784089 /* OMSDK_Pubnativenet.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 623F066826CBDCE400784089 /* OMSDK_Pubnativenet.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		62AED0702685F64D00CDDDD1 /* HyBidDisplayManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AED06E2685F64D00CDDDD1 /* HyBidDisplayManager.h */; };
 		62AED0712685F64D00CDDDD1 /* HyBidDisplayManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AED06E2685F64D00CDDDD1 /* HyBidDisplayManager.h */; };
 		62AED0722685F64D00CDDDD1 /* HyBidDisplayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AED06F2685F64D00CDDDD1 /* HyBidDisplayManager.m */; };
@@ -929,17 +928,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				5A32CED02029F8530003B450 /* HyBid.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6FFA3508261C405B00573C74 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				623F066E26CC5F8600784089 /* OMSDK_Pubnativenet.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3257,7 +3245,6 @@
 				5A6CD01C2029CD060022E206 /* Frameworks */,
 				5A6CD01D2029CD060022E206 /* Headers */,
 				5A6CD01E2029CD060022E206 /* Resources */,
-				6FFA3508261C405B00573C74 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4285,6 +4272,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PubnativeLite",
@@ -4302,7 +4290,6 @@
 					"$(BUILT_PRODUCTS_DIR)/Analytics",
 				);
 				MARKETING_VERSION = "2.5.4-beta1";
-				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = net.pubnative.PubnativeLite;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -4328,6 +4315,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PubnativeLite",
@@ -4344,7 +4332,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = "2.5.4-beta1";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = net.pubnative.PubnativeLite;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
