@@ -107,12 +107,12 @@ NSInteger const MAX_RETRIES = 1;
     }
 }
 
-- (NSArray *)getImpObjectFor:(AdType)adType
+- (NSArray *)getImpObjectFor:(HyBidOpenRTBAdType)adType
 {
     NSNumber *width = [NSNumber numberWithInteger:[self.adRequestModel.requestParameters[HyBidRequestParameter.width] integerValue]];
     NSNumber *height = [NSNumber numberWithInteger:[self.adRequestModel.requestParameters[HyBidRequestParameter.height] integerValue]];
     
-    if (adType == NATIVE) {
+    if (adType == HyBidOpenRTBAdNative) {
         NSArray *arr = @[
             @{
                 @"id": NSUUID.UUID.UUIDString,
@@ -127,7 +127,7 @@ NSInteger const MAX_RETRIES = 1;
             }
         ];
         return [self appendSkAdNetworkParametersTo:arr];
-    } else if (adType == VIDEO) {
+    } else if (adType ==     HyBidOpenRTBAdVideo) {
         NSArray *arr = @[
             @{
                 @"id": NSUUID.UUID.UUIDString,
@@ -139,7 +139,7 @@ NSInteger const MAX_RETRIES = 1;
             }
         ];
         return [self appendSkAdNetworkParametersTo:arr];
-    } else if (adType == BANNER) {
+    } else if (adType ==     HyBidOpenRTBAdBanner) {
         NSArray *arr = @[
             @{
                 @"id": NSUUID.UUID.UUIDString,

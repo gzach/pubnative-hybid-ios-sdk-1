@@ -67,7 +67,7 @@
             [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"HyBid SDK was not initialized. Please initialize it before creating a HyBidAdView. Check out https://github.com/pubnative/pubnative-hybid-ios-sdk/wiki/Setup-HyBid for the setup process."];
         }
         self.adRequest = [[HyBidAdRequest alloc] init];
-        self.adRequest.openRTBAdType = BANNER;
+        self.adRequest.openRTBAdType = HyBidOpenRTBAdBanner;
         self.auctionResponses = [[NSMutableArray alloc]init];
         self.adSize = adSize;
         self.autoShowOnLoad = true;

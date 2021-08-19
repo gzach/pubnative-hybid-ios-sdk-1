@@ -59,7 +59,7 @@
             [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"HyBid SDK was not initialized. Please initialize it before creating a HyBidRewardedAd. Check out https://github.com/pubnative/pubnative-hybid-ios-sdk/wiki/Setup-HyBid for the setup process."];
         }
         self.rewardedAdRequest = [[HyBidRewardedAdRequest alloc] init];
-        self.rewardedAdRequest.openRTBAdType = VIDEO;
+        self.rewardedAdRequest.openRTBAdType = HyBidOpenRTBAdVideo;
         self.zoneID = zoneID;
         self.delegate = delegate;
     }

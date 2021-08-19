@@ -62,7 +62,7 @@
             [HyBidLogger warningLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"HyBid SDK was not initialized. Please initialize it before creating a HyBidInterstitialAd. Check out https://github.com/pubnative/pubnative-hybid-ios-sdk/wiki/Setup-HyBid for the setup process."];
         }
         self.interstitialAdRequest = [[HyBidInterstitialAdRequest alloc] init];
-        self.interstitialAdRequest.openRTBAdType = VIDEO;
+        self.interstitialAdRequest.openRTBAdType = HyBidOpenRTBAdVideo;
         self.zoneID = zoneID;
         self.delegate = delegate;
         // Global skipOffset will be used as placement offset if this one is not set previously.

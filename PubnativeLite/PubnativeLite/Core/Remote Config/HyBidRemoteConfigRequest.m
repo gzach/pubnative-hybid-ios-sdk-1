@@ -38,7 +38,7 @@
     self.delegate = nil;
 }
 
-- (void)doConsentRequestWithDelegate:(NSObject<HyBidRemoteConfigRequestDelegate> *)delegate
+- (void)doConfigRequestWithDelegate:(NSObject<HyBidRemoteConfigRequestDelegate> *)delegate
                         withAppToken:(NSString *)appToken {
     if (!delegate) {
         [self invokeDidFail:[NSError errorWithDomain:@"Given delegate is nil and required, droping this call." code:0 userInfo:nil]];
