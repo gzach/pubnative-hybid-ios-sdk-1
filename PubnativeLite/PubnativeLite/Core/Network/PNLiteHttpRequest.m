@@ -28,6 +28,7 @@
 #import "HyBidRequestParameter.h"
 #import "HyBidSkAdNetworkRequestModel.h"
 #import "HyBid.h"
+#import "HyBidError.h"
 
 NSTimeInterval const PNLiteHttpRequestDefaultTimeout = 60;
 NSURLRequestCachePolicy const PNLiteHttpRequestDefaultCachePolicy = NSURLRequestUseProtocolCachePolicy;
@@ -231,8 +232,7 @@ NSInteger const MAX_RETRIES = 1;
 
 - (void)invokeFailWithMessage:(NSString *)message andAttemptRetry:(BOOL)retry
 {
-    NSError *error = [NSError errorWithDomain:message code:0 userInfo:nil];
-    [self invokeFailWithError:error andAttemptRetry:retry];
+    [self invokeFailWithError:[NSError hyBidServerErrorWithMessage: message] andAttemptRetry:retry];
 }
 
 - (void)invokeFailWithError:(NSError *)error andAttemptRetry:(BOOL)retry

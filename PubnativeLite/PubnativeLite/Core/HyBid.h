@@ -116,6 +116,7 @@ FOUNDATION_EXPORT const unsigned char HyBidVersionString[];
 #import <HyBid/HyBidReporting.h>
 #import <HyBid/HyBidReportingEvent.h>
 #import <HyBid/HyBidDiagnosticsManager.h>
+#import <HyBid/HyBidError.h>
 
 typedef void (^HyBidCompletionBlock)(BOOL);
 
