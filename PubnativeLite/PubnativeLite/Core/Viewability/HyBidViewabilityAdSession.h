@@ -20,7 +20,6 @@
 //  THE SOFTWARE.
 //
 
-#import <OMIDImports.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "HyBidViewabilityManager.h"
