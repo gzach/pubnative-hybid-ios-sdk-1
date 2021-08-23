@@ -3680,6 +3680,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7E8E8FA26CAE780000E877B /* HyBidError.m in Sources */,
 				7E45CF32256FB79400E0FC3D /* PNLiteVastMacrosUtils.m in Sources */,
 				7E4CCA7A250712A6003A3425 /* PNLiteMRAIDModalViewController.m in Sources */,
 				7E4CCA75250710EB003A3425 /* HyBidHeaderBiddingUtils.m in Sources */,
@@ -3785,7 +3786,6 @@
 				5AFF730720B451C100052F2D /* PNLiteConsentPageViewController.m in Sources */,
 				6FD11E582514C0ED00655B06 /* HyBidSkAdNetworkModel.m in Sources */,
 				5ADB0FB320AF0B30005BDAF5 /* PNLiteCountryUtils.m in Sources */,
-				E7E8E8FA26CAE780000E877B /* HyBidError.m in Sources */,
 				5A54024B202B058A005D80E6 /* PNLiteCryptoUtils.m in Sources */,
 				5ADACD1C202CB88A00617734 /* PNLiteData.m in Sources */,
 				5AA3D5F62031CEC2002BFDA3 /* PNLiteHttpRequest.m in Sources */,
