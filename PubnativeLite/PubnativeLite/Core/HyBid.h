@@ -118,6 +118,19 @@ FOUNDATION_EXPORT const unsigned char HyBidVersionString[];
 #import <HyBid/HyBidDiagnosticsManager.h>
 #import <HyBid/HyBidError.h>
 
+#import <AdSupport/AdSupport.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <CoreLocation/CoreLocation.h>
+#import <CoreMedia/CoreMedia.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <Foundation/Foundation.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import <MessageUI/MessageUI.h>
+#import <QuartzCore/QuartzCore.h>
+#import <StoreKit/StoreKit.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <UIKit/UIKit.h>
+
 typedef void (^HyBidCompletionBlock)(BOOL);
 
 @interface HyBid : NSObject

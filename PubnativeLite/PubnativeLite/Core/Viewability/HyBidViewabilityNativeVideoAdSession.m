@@ -22,7 +22,7 @@
 
 #import "HyBidViewabilityNativeVideoAdSession.h"
 #import "HyBid.h"
-#import "OMIDImports.h"
+#import <OMSDK_Pubnativenet/OMIDImports.h>
 
 @interface HyBidViewabilityNativeVideoAdSession()
 

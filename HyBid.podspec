@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "HyBid"
-  s.version      = "2.6.1"
+  s.version      = "2.6.2-beta1"
   s.summary      = "This is the iOS SDK of HyBid. You can read more about it at https://pubnative.net."
   s.description = <<-DESC
                      HyBid leverages first-look prebid technology to maximize yield for the publishers across
@@ -39,12 +39,36 @@ Pod::Spec.new do |s|
   s.authors      = { "Can Soykarafakili" => "can.soykarafakili@pubnative.net", "Eros Garcia Ponte" => "eros.ponte@pubnative.net", "Fares Benhamouda" => "fares.benhamouda@pubnative.net", "Orkhan Alizada" => "orkhan.alizada@pubnative.net"  }
   s.platform     = :ios
 
-  s.ios.deployment_target = "9.0"
-  s.source       = { :git => "https://github.com/pubnative/pubnative-hybid-ios-sdk.git", :tag => "2.6.1" }
+  s.ios.deployment_target = "10.0"
+  s.source       = { :git => "https://github.com/pubnative/pubnative-hybid-ios-sdk.git", :tag => "2.6.2-beta1" }
+  s.frameworks       = [
+                            'AVFoundation',
+                            'AVKit',
+                            'CoreGraphics',
+                            'CoreLocation',
+                            'CoreMedia',
+                            'CoreTelephony',
+                            'Foundation',
+                            'MediaPlayer',
+                            'QuartzCore',
+                            'SystemConfiguration',
+                            'UIKit',
+                            'SafariServices'
+                          ]
+  s.weak_frameworks  = [
+                            'AdSupport',
+                            'StoreKit',
+                            'WebKit'
+                          ]
+  s.xcconfig = {
+    'OTHER_LDFLAGS' => '-framework OMSDK_Pubnativenet'
+  }
+
+  s.requires_arc     = true
 
   s.subspec 'Core' do |core|
     core.source_files          = 'PubnativeLite/PubnativeLite/Core/**/*.{swift,h,m}'
-    core.resources            =  ['PubnativeLite/PubnativeLite/Resources/**/*', 'PubnativeLite/PubnativeLite/OMSDK-1.3.22/*.js', 'PubnativeLite/PubnativeLite/Core/MRAID/*.js']
+    core.resource_bundles     = {'HyBidResources' =>  ['PubnativeLite/PubnativeLite/Resources/**/*', 'PubnativeLite/PubnativeLite/OMSDK-1.3.22/*.js', 'PubnativeLite/PubnativeLite/Core/MRAID/*.js']}
     core.exclude_files         = 'PubnativeLite/PubnativeLite/Core/HyBidStatic.{swift,h,m}'
     core.vendored_frameworks   = ['PubnativeLite/PubnativeLite/OMSDK-1.3.22/*.{xcframework}']
   end

@@ -21,10 +21,10 @@
 //
 
 #import "HyBidViewabilityManager.h"
-#import "OMIDImports.h"
 #import "HyBidLogger.h"
 #import "HyBidConstants.h"
 #import "HyBid.h"
+#import <OMSDK_Pubnativenet/OMIDImports.h>
 
 static NSString *const HyBidViewabilityPartnerName = @"Pubnativenet";
 static NSString *const HyBidOMIDSDKJSFilename = @"omsdk";

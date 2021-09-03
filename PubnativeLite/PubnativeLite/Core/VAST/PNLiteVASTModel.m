@@ -24,7 +24,7 @@
 #import "PNLiteVASTMediaFile.h"
 #import "PNLiteVASTXMLUtil.h"
 #import "HyBidLogger.h"
-#import "OMIDVerificationScriptResource.h"
+#import <OMSDK_Pubnativenet/OMIDVerificationScriptResource.h>
 
 @interface PNLiteVASTModel ()
 
