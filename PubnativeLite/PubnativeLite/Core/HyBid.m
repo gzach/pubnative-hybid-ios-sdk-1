@@ -21,8 +21,6 @@
 //
 
 #import "HyBid.h"
-#import "HyBidSettings.h"
-#import "HyBidUserDataManager.h"
 #import "PNLiteLocationManager.h"
 #import "HyBidConstants.h"
 #import "HyBidRemoteConfigManager.h"
