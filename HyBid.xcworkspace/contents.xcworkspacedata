@@ -21,7 +21,7 @@
       </FileRef>
    </Group>
    <FileRef
-      location = "group:PubnativeLite/HyBid.xcodeproj">
+      location = "group:PubnativeLite/HyBidTest.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

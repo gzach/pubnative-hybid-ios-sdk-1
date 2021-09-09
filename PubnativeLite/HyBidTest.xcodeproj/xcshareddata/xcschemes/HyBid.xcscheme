@@ -5,6 +5,22 @@
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5A6CD01F2029CD060022E206"
+               BuildableName = "HyBidTest.framework"
+               BlueprintName = "HyBidTest"
+               ReferencedContainer = "container:HyBidTest.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
@@ -17,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5A969A3C206523F800C3B74A"
-               BuildableName = "HyBidTests.xctest"
-               BlueprintName = "HyBidTests"
-               ReferencedContainer = "container:HyBid.xcodeproj">
+               BuildableName = "HyBidTestTests.xctest"
+               BlueprintName = "HyBidTestTests"
+               ReferencedContainer = "container:HyBidTest.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -41,6 +57,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5A6CD01F2029CD060022E206"
+            BuildableName = "HyBidTest.framework"
+            BlueprintName = "HyBidTest"
+            ReferencedContainer = "container:HyBidTest.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

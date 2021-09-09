@@ -46,8 +46,8 @@
 		5A32CEC32029F79B0003B450 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A32CEC12029F79B0003B450 /* Main.storyboard */; };
 		5A32CEC52029F79B0003B450 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A32CEC42029F79B0003B450 /* Assets.xcassets */; };
 		5A32CECB2029F79B0003B450 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A32CECA2029F79B0003B450 /* main.m */; };
-		5A32CECF2029F8530003B450 /* HyBid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A6CD0202029CD060022E206 /* HyBid.framework */; };
-		5A32CED02029F8530003B450 /* HyBid.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5A6CD0202029CD060022E206 /* HyBid.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5A32CECF2029F8530003B450 /* HyBidTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A6CD0202029CD060022E206 /* HyBidTest.framework */; };
+		5A32CED02029F8530003B450 /* HyBidTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5A6CD0202029CD060022E206 /* HyBidTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5A3657CD203C2E75004B4347 /* PNLiteAdPresenterDecorator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A3657CB203C2E75004B4347 /* PNLiteAdPresenterDecorator.h */; };
 		5A3657CE203C2E75004B4347 /* PNLiteAdPresenterDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3657CC203C2E75004B4347 /* PNLiteAdPresenterDecorator.m */; };
 		5A3657D1203C41DA004B4347 /* PNLiteMRAIDBannerPresenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A3657CF203C41DA004B4347 /* PNLiteMRAIDBannerPresenter.h */; };
@@ -160,7 +160,7 @@
 		5A91E66C20C01E5000527BAA /* PNLiteUserConsentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A91E66A20C01E5000527BAA /* PNLiteUserConsentRequest.m */; };
 		5A921D432530B2B9006F1572 /* SignalData.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A921D422530B2B9006F1572 /* SignalData.storyboard */; };
 		5A921D4B2530B605006F1572 /* HyBidDemoSignalDataMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A921D4A2530B605006F1572 /* HyBidDemoSignalDataMainViewController.m */; };
-		5A969A42206523F800C3B74A /* HyBid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A6CD0202029CD060022E206 /* HyBid.framework */; };
+		5A969A42206523F800C3B74A /* HyBidTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A6CD0202029CD060022E206 /* HyBidTest.framework */; };
 		5A9A021F23C88A88005C0A45 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A9A021E23C88A88005C0A45 /* Launch Screen.storyboard */; };
 		5A9A885921087C13006A081D /* PNLiteTrackingManagerItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9A885721087C12006A081D /* PNLiteTrackingManagerItem.m */; };
 		5A9A885A21087C13006A081D /* PNLiteTrackingManagerItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A9A885821087C13006A081D /* PNLiteTrackingManagerItem.h */; };
@@ -539,7 +539,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5A32CED02029F8530003B450 /* HyBid.framework in Embed Frameworks */,
+				5A32CED02029F8530003B450 /* HyBidTest.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -587,7 +587,7 @@
 		5A2EC33C20C83DA2000F9747 /* PNLiteClose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PNLiteClose@2x.png"; sourceTree = "<group>"; };
 		5A2EC33D20C83DA3000F9747 /* PNLiteClose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PNLiteClose.png; sourceTree = "<group>"; };
 		5A2EC33E20C83DA5000F9747 /* PNLiteClose@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PNLiteClose@3x.png"; sourceTree = "<group>"; };
-		5A32CEB92029F79B0003B450 /* HyBidDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HyBidDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A32CEB92029F79B0003B450 /* HyBidTestDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HyBidTestDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A32CEBB2029F79B0003B450 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5A32CEBC2029F79B0003B450 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5A32CEBE2029F79B0003B450 /* PNLiteDemoMoPubBannerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PNLiteDemoMoPubBannerViewController.h; sourceTree = "<group>"; };
@@ -684,7 +684,7 @@
 		5A6923CB2405365F001868A3 /* HyBidAdSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyBidAdSize.h; sourceTree = "<group>"; };
 		5A6923CC2405365F001868A3 /* HyBidAdSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyBidAdSize.m; sourceTree = "<group>"; };
 		5A6BBE7A206263BB0079F8A5 /* HyBid-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HyBid-Bridging-Header.h"; sourceTree = "<group>"; };
-		5A6CD0202029CD060022E206 /* HyBid.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HyBid.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A6CD0202029CD060022E206 /* HyBidTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HyBidTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A6CD0232029CD060022E206 /* HyBid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyBid.h; sourceTree = "<group>"; };
 		5A6CD0242029CD060022E206 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A71309A2068F39A000B83D9 /* PNLiteHttpRequestTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PNLiteHttpRequestTest.m; sourceTree = "<group>"; };
@@ -757,7 +757,7 @@
 		5A921D422530B2B9006F1572 /* SignalData.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignalData.storyboard; sourceTree = "<group>"; };
 		5A921D492530B605006F1572 /* HyBidDemoSignalDataMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyBidDemoSignalDataMainViewController.h; sourceTree = "<group>"; };
 		5A921D4A2530B605006F1572 /* HyBidDemoSignalDataMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HyBidDemoSignalDataMainViewController.m; sourceTree = "<group>"; };
-		5A969A3D206523F800C3B74A /* HyBidTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HyBidTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A969A3D206523F800C3B74A /* HyBidTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HyBidTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A969A41206523F800C3B74A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A9A021E23C88A88005C0A45 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5A9A885721087C12006A081D /* PNLiteTrackingManagerItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNLiteTrackingManagerItem.m; sourceTree = "<group>"; };
@@ -1202,7 +1202,7 @@
 				5A8903D5203DE1E100D86051 /* SystemConfiguration.framework in Frameworks */,
 				5A8903D3203DE1DA00D86051 /* UIKit.framework in Frameworks */,
 				5A8903D1203DE1D400D86051 /* WebKit.framework in Frameworks */,
-				5A32CECF2029F8530003B450 /* HyBid.framework in Frameworks */,
+				5A32CECF2029F8530003B450 /* HyBidTest.framework in Frameworks */,
 				2EB929E68ACF4B6A9FE71DCE /* Pods_HyBidDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1220,7 +1220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AD1404B2065293D0018845E /* OCHamcrestIOS.framework in Frameworks */,
-				5A969A42206523F800C3B74A /* HyBid.framework in Frameworks */,
+				5A969A42206523F800C3B74A /* HyBidTest.framework in Frameworks */,
 				5AD140492065292A0018845E /* OCMockitoIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1590,9 +1590,9 @@
 		5A6CD0212029CD060022E206 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5A6CD0202029CD060022E206 /* HyBid.framework */,
-				5A32CEB92029F79B0003B450 /* HyBidDemo.app */,
-				5A969A3D206523F800C3B74A /* HyBidTests.xctest */,
+				5A6CD0202029CD060022E206 /* HyBidTest.framework */,
+				5A32CEB92029F79B0003B450 /* HyBidTestDemo.app */,
+				5A969A3D206523F800C3B74A /* HyBidTestTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2661,9 +2661,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		5A32CEB82029F79B0003B450 /* HyBidDemo */ = {
+		5A32CEB82029F79B0003B450 /* HyBidTestDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A32CECE2029F79B0003B450 /* Build configuration list for PBXNativeTarget "HyBidDemo" */;
+			buildConfigurationList = 5A32CECE2029F79B0003B450 /* Build configuration list for PBXNativeTarget "HyBidTestDemo" */;
 			buildPhases = (
 				D55CF0076D6CF5CD56E451E3 /* [CP] Check Pods Manifest.lock */,
 				5A32CEB52029F79B0003B450 /* Sources */,
@@ -2677,14 +2677,14 @@
 			dependencies = (
 				5A32CED22029F8530003B450 /* PBXTargetDependency */,
 			);
-			name = HyBidDemo;
+			name = HyBidTestDemo;
 			productName = HyBidDemo;
-			productReference = 5A32CEB92029F79B0003B450 /* HyBidDemo.app */;
+			productReference = 5A32CEB92029F79B0003B450 /* HyBidTestDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5A6CD01F2029CD060022E206 /* HyBid */ = {
+		5A6CD01F2029CD060022E206 /* HyBidTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A6CD0282029CD060022E206 /* Build configuration list for PBXNativeTarget "HyBid" */;
+			buildConfigurationList = 5A6CD0282029CD060022E206 /* Build configuration list for PBXNativeTarget "HyBidTest" */;
 			buildPhases = (
 				5A6CD01B2029CD060022E206 /* Sources */,
 				5A6CD01D2029CD060022E206 /* Headers */,
@@ -2695,14 +2695,14 @@
 			);
 			dependencies = (
 			);
-			name = HyBid;
+			name = HyBidTest;
 			productName = HyBid;
-			productReference = 5A6CD0202029CD060022E206 /* HyBid.framework */;
+			productReference = 5A6CD0202029CD060022E206 /* HyBidTest.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		5A969A3C206523F800C3B74A /* HyBidTests */ = {
+		5A969A3C206523F800C3B74A /* HyBidTestTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A969A47206523F800C3B74A /* Build configuration list for PBXNativeTarget "HyBidTests" */;
+			buildConfigurationList = 5A969A47206523F800C3B74A /* Build configuration list for PBXNativeTarget "HyBidTestTests" */;
 			buildPhases = (
 				5A969A39206523F800C3B74A /* Sources */,
 				5A969A3A206523F800C3B74A /* Frameworks */,
@@ -2713,9 +2713,9 @@
 			dependencies = (
 				5A969A44206523F800C3B74A /* PBXTargetDependency */,
 			);
-			name = HyBidTests;
+			name = HyBidTestTests;
 			productName = HyBidTests;
-			productReference = 5A969A3D206523F800C3B74A /* HyBidTests.xctest */;
+			productReference = 5A969A3D206523F800C3B74A /* HyBidTestTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -2740,7 +2740,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5A6CD01A2029CD060022E206 /* Build configuration list for PBXProject "HyBid" */;
+			buildConfigurationList = 5A6CD01A2029CD060022E206 /* Build configuration list for PBXProject "HyBidTest" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -2753,9 +2753,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5A6CD01F2029CD060022E206 /* HyBid */,
-				5A32CEB82029F79B0003B450 /* HyBidDemo */,
-				5A969A3C206523F800C3B74A /* HyBidTests */,
+				5A6CD01F2029CD060022E206 /* HyBidTest */,
+				5A32CEB82029F79B0003B450 /* HyBidTestDemo */,
+				5A969A3C206523F800C3B74A /* HyBidTestTests */,
 			);
 		};
 /* End PBXProject section */
@@ -3194,12 +3194,12 @@
 /* Begin PBXTargetDependency section */
 		5A32CED22029F8530003B450 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5A6CD01F2029CD060022E206 /* HyBid */;
+			target = 5A6CD01F2029CD060022E206 /* HyBidTest */;
 			targetProxy = 5A32CED12029F8530003B450 /* PBXContainerItemProxy */;
 		};
 		5A969A44206523F800C3B74A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5A6CD01F2029CD060022E206 /* HyBid */;
+			target = 5A6CD01F2029CD060022E206 /* HyBidTest */;
 			targetProxy = 5A969A43206523F800C3B74A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -3242,7 +3242,7 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = "2.6.2-beta3";
+				MARKETING_VERSION = "2.6.2-beta4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pubnative.HyBid.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7c9fb847-6c94-4677-a844-7545db19f59a";
@@ -3282,7 +3282,7 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = "2.6.2-beta3";
+				MARKETING_VERSION = "2.6.2-beta4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pubnative.HyBid.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9dc1e001-55bd-467a-b9a9-4db40446e5a6";
@@ -3438,9 +3438,13 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = "2.6.2-beta3";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pubnative/Internal/Viewability/OMSDK-1.3.22",
+				);
+				MARKETING_VERSION = "2.6.2-beta4";
 				MODULEMAP_FILE = "";
+				OTHER_CFLAGS = "-fembed-bitcode";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = net.pubnative.PubnativeLite;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -3481,10 +3485,14 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = "2.6.2-beta3";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pubnative/Internal/Viewability/OMSDK-1.3.22",
+				);
+				MARKETING_VERSION = "2.6.2-beta4";
 				MODULEMAP_FILE = "";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-fembed-bitcode";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = net.pubnative.PubnativeLite;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -3554,7 +3562,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5A32CECE2029F79B0003B450 /* Build configuration list for PBXNativeTarget "HyBidDemo" */ = {
+		5A32CECE2029F79B0003B450 /* Build configuration list for PBXNativeTarget "HyBidTestDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A32CECC2029F79B0003B450 /* Debug */,
@@ -3563,7 +3571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A6CD01A2029CD060022E206 /* Build configuration list for PBXProject "HyBid" */ = {
+		5A6CD01A2029CD060022E206 /* Build configuration list for PBXProject "HyBidTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A6CD0262029CD060022E206 /* Debug */,
@@ -3572,7 +3580,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A6CD0282029CD060022E206 /* Build configuration list for PBXNativeTarget "HyBid" */ = {
+		5A6CD0282029CD060022E206 /* Build configuration list for PBXNativeTarget "HyBidTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A6CD0292029CD060022E206 /* Debug */,
@@ -3581,7 +3589,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A969A47206523F800C3B74A /* Build configuration list for PBXNativeTarget "HyBidTests" */ = {
+		5A969A47206523F800C3B74A /* Build configuration list for PBXNativeTarget "HyBidTestTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A969A45206523F800C3B74A /* Debug */,

@@ -1,5 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "HyBid"
+  s.module_name  = "HyBidTest"
   s.version      = "2.6.2-beta3"
   s.summary      = "This is the iOS SDK of HyBid. You can read more about it at https://pubnative.net."
   s.description = <<-DESC
@@ -53,17 +54,17 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Banner' do |banner|
-    banner.dependency           'HyBid/Core'
+    banner.dependency           'HyBidTest/Core'
     banner.source_files         = ['PubnativeLite/PubnativeLite/Banner/**/*.{swift,h,m}']
   end
 
   s.subspec 'Native' do |native|
-    native.dependency           'HyBid/Core'
+    native.dependency           'HyBidTest/Core'
         native.source_files     = ['PubnativeLite/PubnativeLite/Native/**/*.{swift,h,m}']
   end
 
   s.subspec 'FullScreen' do |fullscreen|
-    fullscreen.dependency       'HyBid/Core'
+    fullscreen.dependency       'HyBidTest/Core'
     fullscreen.source_files     = ['PubnativeLite/PubnativeLite/FullScreen/**/*.{swift,h,m}']
   end
 
