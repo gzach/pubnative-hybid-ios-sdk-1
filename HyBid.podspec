@@ -54,22 +54,22 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Banner' do |banner|
-    banner.dependency           'HyBidTest/Core'
+    banner.dependency           'HyBid/Core'
     banner.source_files         = ['PubnativeLite/PubnativeLite/Banner/**/*.{swift,h,m}']
   end
 
   s.subspec 'Native' do |native|
-    native.dependency           'HyBidTest/Core'
+    native.dependency           'HyBid/Core'
         native.source_files     = ['PubnativeLite/PubnativeLite/Native/**/*.{swift,h,m}']
   end
 
   s.subspec 'FullScreen' do |fullscreen|
-    fullscreen.dependency       'HyBidTest/Core'
+    fullscreen.dependency       'HyBid/Core'
     fullscreen.source_files     = ['PubnativeLite/PubnativeLite/FullScreen/**/*.{swift,h,m}']
   end
 
   s.subspec 'RewardedVideo' do |rewarded|
-    rewarded.dependency         'HyBidTest/Core'
+    rewarded.dependency         'HyBid/Core'
     rewarded.source_files       = ['PubnativeLite/PubnativeLite/Rewarded/**/*.{swift,h,m}']
   end
 
