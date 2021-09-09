@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "HyBid"
   s.module_name  = "HyBidTest"
-  s.version      = "2.6.2-beta3"
+  s.version      = "2.6.2-beta4"
   s.summary      = "This is the iOS SDK of HyBid. You can read more about it at https://pubnative.net."
   s.description = <<-DESC
                      HyBid leverages first-look prebid technology to maximize yield for the publishers across
@@ -41,12 +41,12 @@ Pod::Spec.new do |s|
   s.platform     = :ios
 
   s.ios.deployment_target = "9.0"
-  s.source       = { :git => "https://github.com/pubnative/pubnative-hybid-ios-sdk.git", :tag => "2.6.2-beta3" }
+  s.source       = { :git => "https://github.com/pubnative/pubnative-hybid-ios-sdk.git", :tag => "2.6.2-beta4" }
 
   s.xcconfig = {
     'OTHER_LDFLAGS' => '-framework OMSDK_Pubnativenet'
   }
-  
+      
   s.subspec 'Core' do |core|
     core.source_files          = 'PubnativeLite/PubnativeLite/Core/**/*.{swift,h,m}'
     core.resource_bundles     = {'HyBidResources' =>  ['PubnativeLite/PubnativeLite/Resources/**/*', 'PubnativeLite/PubnativeLite/Core/Viewability/OMSDK-1.3.22/*.js', 'PubnativeLite/PubnativeLite/Core/MRAID/*.js']}
@@ -69,7 +69,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'RewardedVideo' do |rewarded|
-    rewarded.dependency         'HyBid/Core'
+    rewarded.dependency         'HyBidTest/Core'
     rewarded.source_files       = ['PubnativeLite/PubnativeLite/Rewarded/**/*.{swift,h,m}']
   end
 
