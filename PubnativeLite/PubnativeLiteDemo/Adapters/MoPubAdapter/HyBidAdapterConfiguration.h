@@ -26,7 +26,7 @@
 #import "MPBaseAdapterConfiguration.h"
 #endif
 
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 
 @interface HyBidAdapterConfiguration : MPBaseAdapterConfiguration
 

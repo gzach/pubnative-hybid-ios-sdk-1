@@ -22,7 +22,7 @@
 
 
 #import "HyBidDemoSignalDataDetailViewController.h"
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 
 @interface HyBidDemoSignalDataDetailViewController () <HyBidAdViewDelegate>
 

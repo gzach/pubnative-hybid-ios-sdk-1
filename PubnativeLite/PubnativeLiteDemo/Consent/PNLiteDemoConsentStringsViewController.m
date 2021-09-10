@@ -21,7 +21,7 @@
 //
 
 #import "PNLiteDemoConsentStringsViewController.h"
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 
 #define kCCPAPublicPrivacyKey @"IABUSPrivacy_String"
 #define kGDPRPublicConsentKey @"IABConsent_ConsentString"

@@ -22,7 +22,7 @@
 
 #import "HyBidDemoSignalDataMainViewController.h"
 #import "HyBidDemoSignalDataDetailViewController.h"
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 #import "SignalData.h"
 #import "UITextView+KeyboardDismiss.h"
 

@@ -29,7 +29,7 @@
 #import "MPError.h"
 #endif
 
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 
 @interface HyBidMoPubHeaderBiddingBannerCustomEvent : MPInlineAdAdapter
 

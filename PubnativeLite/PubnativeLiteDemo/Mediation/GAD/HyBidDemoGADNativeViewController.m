@@ -21,7 +21,7 @@
 //
 
 #import "HyBidDemoGADNativeViewController.h"
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 #import "PNLiteDemoSettings.h"
 
 @import GoogleMobileAds;

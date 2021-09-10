@@ -28,7 +28,7 @@
 #import "MPLogging.h"
 #endif
 
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 
 @interface HyBidMoPubMediationNativeAdAdapter : NSObject <MPNativeAdAdapter>
 

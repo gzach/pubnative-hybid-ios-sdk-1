@@ -21,7 +21,7 @@
 //
 
 #import "PNLiteDemoCustomSDKDataViewController.h"
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 
 @interface PNLiteDemoCustomSDKDataViewController ()
 

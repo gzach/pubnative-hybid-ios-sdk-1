@@ -21,7 +21,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, HyBidReportingDelegate>
 

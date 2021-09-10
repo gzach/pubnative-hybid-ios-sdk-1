@@ -21,7 +21,7 @@
 //
 
 #import "AnalyticsEventTableViewCell.h"
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 
 @implementation AnalyticsEventTableViewCell
 

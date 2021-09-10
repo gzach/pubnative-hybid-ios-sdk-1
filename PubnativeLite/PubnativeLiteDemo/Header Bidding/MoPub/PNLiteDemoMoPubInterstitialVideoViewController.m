@@ -21,7 +21,7 @@
 //
 
 #import "PNLiteDemoMoPubInterstitialVideoViewController.h"
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 #import <MoPubSDK/MPInterstitialAdController.h>
 #import "PNLiteDemoSettings.h"
 

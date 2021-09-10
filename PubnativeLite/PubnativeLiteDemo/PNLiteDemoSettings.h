@@ -21,7 +21,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <HyBid/HyBid.h>
+#import <HyBid.h>
 
 #define kHyBidDemoAppTokenKey @"appToken"
 #define kHyBidDemoZoneIDKey @"zoneID"
